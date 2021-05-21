@@ -3,8 +3,8 @@
     <div class="right-side">
       <div class="form mt-5">
         <div class="choice pe-4">
-          <span @click="loginClick">Login</span> / 
-          <span @click="signUpClick">Signup</span>
+          <span @click="loginClick" :class="{ activate: state == 'login' }">Login</span> / 
+          <span @click="signUpClick" :class="{ activate: state == 'signup' }">Signup</span>
         </div>
         <div v-if="state === 'login'">
           <LoginForm />
@@ -101,5 +101,11 @@ export default {
     bottom: 100px;
     left: 30px;
     text-shadow: 2px 4px 1px rgba(0,0,0,1);
+  }
+
+  .activate {
+    color: yellow;
+    font-size: 20px;
+    text-shadow: 0 0 20px yellow;
   }
 </style>

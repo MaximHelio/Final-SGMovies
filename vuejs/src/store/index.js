@@ -11,6 +11,11 @@ export default new Vuex.Store({
     userInfo: {},
     token: localStorage.getItem('token') || '',
   },
+  getters: {
+    isAuthenticated(state) {
+      return state.token ? true : false
+    }
+  },
   mutations: {
     CREATE_USER(state, userInfo) {
       state.userInfo = userInfo
@@ -30,6 +35,7 @@ export default new Vuex.Store({
     async AUTH_USER({ commit }, userInfo) {
       const AUTH_USER_URL = '/api/token/'
       const data = userInfo
+      console.log('hi')
       const response = await axios.post(AUTH_USER_URL, data)
       console.log(response)
       const token = response.data.access

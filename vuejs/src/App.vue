@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <LoginSignupView />
+    <div v-if="isAuthenticated">
+      <div>ㅎㅇ</div>
+    </div>
+    <div v-else>
+     <LoginSignupView />
+    </div>
   </div>
 </template>
 <script>
@@ -11,6 +16,11 @@ export default {
   components: {
     LoginSignupView
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated
+    }
+  }
 }
 </script>
 
