@@ -1,15 +1,15 @@
 <template>
   <div class="login-form">
     <div class="area">
-      <input type="text" name="id" id="id" autocomplete="off" required autofocus>
+      <input v-model="userInfo.username" type="text" name="id" id="id" autocomplete="off" required autofocus>
       <label for="id" id="id-lb">USERNAME</label>
     </div>
     <div class="area mt-3">
-      <input type="password" name="pw" id="pw" autocomplete="off" required>
+      <input v-model="userInfo.password" @keyup.enter="onSubmit" type="password" name="pw" id="pw" autocomplete="off" required>
       <label for="id" id="pw-lb">PASSWORD</label>
     </div>
     <div class="d-grid gap-2 col-12 mx-auto">
-      <button @click="onClick" class="btn btn-light mt-4">Login</button>
+      <button @click="onSubmit" class="btn btn-light mt-4">Login</button>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     }
   },
   methods: {
-    onClick() {
+    onSubmit() {
       this.$store.dispatch('AUTH_USER', this.userInfo)
     }
   }
