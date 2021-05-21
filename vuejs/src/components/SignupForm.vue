@@ -1,28 +1,43 @@
 <template>
   <div class="signup-form">
     <div class="area">
-      <input type="text" name="id" id="id" autocomplete="off" required autofocus>
+      <input v-model="userInfo.username" type="text" name="id" id="id" autocomplete="off" required autofocus>
       <label for="id" id="id-lb">USERNAME</label>
     </div>
     <div class="area mt-3">
-      <input type="email" name="eamil" id="eamil" autocomplete="off" required>
+      <input v-model="userInfo.email" type="email" name="eamil" id="eamil" autocomplete="off" required>
       <label for="email" id="email-lb">EMAIL</label>
     </div>
     <div class="area mt-3">
-      <input type="password" name="pw" id="pw" autocomplete="off" required>
+      <input v-model="userInfo.password" type="password" name="pw" id="pw" autocomplete="off" required>
       <label for="pw" id="pw-lb">PASSWORD</label>
     </div>
     <div class="area mt-3">
-      <input type="password" name="pw-confirm" id="pw-confirm" autocomplete="off" required>
+      <input v-model="userInfo.password_confirmation" type="password" name="pw-confirm" id="pw-confirm" autocomplete="off" required>
       <label for="pw-confirm" id="pw-lb">PASSWORD CONFIRM</label>
     </div>
-    <button class="btn btn-dark mt-4">SignUp</button>
+    <button @click="onSubmit" class="btn btn-dark mt-4">SignUp</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'SignupForm',
+  data() {
+    return {
+      userInfo: {
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+      }
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$store.dispatch('CREATE_USER', this.userInfo)
+    }
+  }
 }
 </script>
 
