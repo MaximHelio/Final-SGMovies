@@ -1,16 +1,25 @@
 <template>
   <div class="background">
-    <div class="form">
-      <div class="choice">
-        <span @click="loginClick">Login</span> / 
-        <span @click="signUpClick">Signup</span>
+    <div class="right-side">
+      <div class="form mt-5">
+        <div class="choice pe-4">
+          <span @click="loginClick">Login</span> / 
+          <span @click="signUpClick">Signup</span>
+        </div>
+        <div v-if="state === 'login'">
+          <LoginForm />
+        </div>
+        <div v-else>
+          <SignupForm />
+        </div>
       </div>
-      <div v-if="state === 'login'">
-        <LoginForm />
-      </div>
-      <div v-else>
-        <SignupForm />
-      </div>
+    </div>
+    <div class="sentence">
+      <h1>Welcome to our Cinema world</h1>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae nulla alias necessitatibus<br>
+       autem aspernatur in temporibus tempora sequi dolores<br>
+      esse corrupti, distinctio voluptatum ab nesciunt ad quod iusto exercitationem impedit?
     </div>
   </div>
 </template>
@@ -49,6 +58,7 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-between
   }
 
   .background::before {
@@ -58,18 +68,22 @@ export default {
     background-color: rgba(0,0,0,0.2);
   }
 
-  .form {
+  .right-side {
     background-color: black;
     position: relative;
     box-shadow: -5px 5px 10px rgb(12, 12, 12);
-    width: 30%;
+    width: 25%;
     height: 100vh;
     text-align: right;
   }
 
-  .form > div {
+  .right-side > div {
     margin-right: 15px;
     top: 20px;
+  }
+
+  .form {
+    top: 100px;
   }
 
   .choice {
@@ -78,5 +92,14 @@ export default {
 
   .choice > span {
     cursor: pointer;
+  }
+
+  .sentence {
+    color: white;
+    position: absolute;
+    text-align: left;
+    bottom: 100px;
+    left: 30px;
+    text-shadow: 2px 4px 1px rgba(0,0,0,1);
   }
 </style>
