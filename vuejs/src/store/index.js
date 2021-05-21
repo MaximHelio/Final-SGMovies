@@ -9,10 +9,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: {},
+    token: localStorage.getItem('token') || '',
   },
   mutations: {
     CREATE_USER(state, userInfo) {
       state.userInfo = userInfo
+    },
+    AUTH_USER(state, token) {
+      state.token = token
     }
   },
   actions: {
@@ -22,6 +26,15 @@ export default new Vuex.Store({
       const response = await axios.post(USER_CREATE_URL, data)
       console.log(response)
       commit('CREATE_USER', response.data)
+    },
+    async AUTH_USER({ commit }, userInfo) {
+      const AUTH_USER_URL = '/api/token/'
+      const data = userInfo
+      const response = await axios.post(AUTH_USER_URL, data)
+      console.log(response)
+      const token = response.data.access
+      localStorage.setItem('token', token)
+      commit('AUTH_USER', token)
     }
   },
   modules: {

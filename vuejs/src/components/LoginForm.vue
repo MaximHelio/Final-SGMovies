@@ -8,13 +8,28 @@
       <input type="password" name="pw" id="pw" autocomplete="off" required>
       <label for="id" id="pw-lb">PASSWORD</label>
     </div>
-    <button class="btn btn-dark mt-4">Login</button>
+    <div class="d-grid gap-2 col-12 mx-auto">
+      <button @click="onClick" class="btn btn-light mt-4">Login</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'LoginForm',
+  data() {
+    return {
+      userInfo: {
+        username: '',
+        password: '',
+      }
+    }
+  },
+  methods: {
+    onClick() {
+      this.$store.dispatch('AUTH_USER', this.userInfo)
+    }
+  }
 }
 </script>
 
