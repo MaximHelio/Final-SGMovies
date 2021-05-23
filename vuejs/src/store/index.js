@@ -12,6 +12,7 @@ export default new Vuex.Store({
     username: '',
     token: localStorage.getItem('token') || '',
     movieList: [],
+    page: 1,
     latestMovieList: [],
   },
   getters: {
@@ -37,6 +38,8 @@ export default new Vuex.Store({
       state.username = payload.username
     },
     GET_MOVIE_LIST(state, movieList) {
+      state.movieList.push(...movieList)
+      state.page += 1
       state.movieList = movieList
     },
     GET_LATEST_MOVIE_LIST(state, movieList) {
@@ -61,9 +64,9 @@ export default new Vuex.Store({
       localStorage.setItem('token', token)
       commit('AUTH_USER', payload)
     },
-    async GET_MOVIE_LIST({ commit }) {
+    async GET_MOVIE_LIST({ state, commit }) {
       const MOVIE_LIST_URL = '/api/v1/movies/'
-      const response = await axios.get(MOVIE_LIST_URL)
+      const response = await axios.get(`${MOVIE_LIST_URL}?page=${state.page}`)
       commit('GET_MOVIE_LIST', response.data)
     },
     async GET_LATEST_MOVIE_LIST({ commit }) {

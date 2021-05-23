@@ -17,6 +17,10 @@ export default {
   components: {
     RecentMovieCarousel,
   },
+  computed: {
+  },
+  created() {
+  },
 }
 </script>
 

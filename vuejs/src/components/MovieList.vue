@@ -61,7 +61,17 @@ export default {
     sf() {
       this.state = 6
     },
-  }
+    checkBottom() {
+      const {scrollTop, clientHeight, scrollHeight} = document.documentElement
+      if (scrollHeight - scrollTop === clientHeight) {
+        this.$store.dispatch('GET_MOVIE_LIST')
+      }
+    }
+  },
+  created() {
+    this.$store.dispatch('GET_MOVIE_LIST')
+    document.addEventListener('scroll', this.checkBottom)
+  },
 }
 </script>
 
