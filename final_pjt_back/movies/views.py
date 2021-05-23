@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.core.paginator import Paginator
 # from django.shortcuts import render
 
 from django.shortcuts import get_object_or_404
@@ -14,6 +15,12 @@ def index(request):
     if request.method == 'GET':
         # 1. 모든 movie list를 가져온다
         movies = Movie.objects.all()
+        # 1-2. 20개씩 짤라서 페이지네이션
+        paginator = Paginator(movies, 20)  
+
+        page = request.GET.get('page')
+        movies = paginator.get_page(page)
+
         # 2. serialize
         serializer = MovieSerializer(movies, many=True) 
         # 3. 응답
