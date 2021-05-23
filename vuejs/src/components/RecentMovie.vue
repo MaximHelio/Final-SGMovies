@@ -17,6 +17,10 @@ export default {
   components: {
     RecentMovieItem,
   },
+  computed: {
+  },
+  created() {
+  },
 }
 </script>
 

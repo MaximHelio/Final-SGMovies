@@ -19,7 +19,6 @@ export default {
     RecentMovie,
   },
   created() {
-    this.$store.dispatch('GET_MOVIE_LIST')
   },
 }
 </script>
