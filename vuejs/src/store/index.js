@@ -13,6 +13,7 @@ export default new Vuex.Store({
     token: localStorage.getItem('token') || '',
     movieList: [],
     page: 1,
+    latestMovieList: [],
   },
   getters: {
     isAuthenticated(state) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     },
     getMovieList(state) {
       return state.movieList
+    },
+    getLatestMovieList(state) {
+      return state.latestMovieList
     },
   },
   mutations: {
@@ -36,6 +40,10 @@ export default new Vuex.Store({
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)
       state.page += 1
+      state.movieList = movieList
+    },
+    GET_LATEST_MOVIE_LIST(state, movieList) {
+      state.latestMovieList = movieList
     }
   },
   actions: {
@@ -61,6 +69,26 @@ export default new Vuex.Store({
       const response = await axios.get(`${MOVIE_LIST_URL}?page=${state.page}`)
       commit('GET_MOVIE_LIST', response.data)
     },
+    async GET_LATEST_MOVIE_LIST({ commit }) {
+      const LATEST_MOVIE_LIST_URL = '/api/v1/movies/'
+      const response = await axios.get(LATEST_MOVIE_LIST_URL)
+      let latestMovieList = response.data
+      latestMovieList = latestMovieList.sort(function (a, b) {
+        return b.release_date.replace(/-/g, '') - a.release_date.replace(/-/g, '');
+      }).slice(0, 41)
+
+      let result = [];
+      let latestMovieData = [];
+      for (let i=0; i<latestMovieList.length; i++) {
+        if (i % 4 == 0 && i != 0) {
+          result.push(latestMovieData);
+          latestMovieData = [];
+        }
+        latestMovieData.push(latestMovieList[i]);
+      }
+      console.log(result)
+      commit('GET_LATEST_MOVIE_LIST', result)
+    }
   },
   modules: {
   }

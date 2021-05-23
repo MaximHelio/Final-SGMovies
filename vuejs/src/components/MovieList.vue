@@ -38,6 +38,7 @@ export default {
   },
   computed: {
     movieList() {
+      console.log("Z")
       return this.$store.getters.getMovieList
     }
   },
