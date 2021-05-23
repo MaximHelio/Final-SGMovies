@@ -40,7 +40,6 @@ export default new Vuex.Store({
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)
       state.page += 1
-      state.movieList = movieList
     },
     GET_LATEST_MOVIE_LIST(state, movieList) {
       state.latestMovieList = movieList
