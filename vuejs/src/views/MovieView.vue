@@ -20,6 +20,7 @@ export default {
   },
   created() {
     this.$store.dispatch('GET_MOVIE_LIST')
+    this.$store.dispatch('GET_LATEST_MOVIE_LIST')
   },
 }
 </script>
