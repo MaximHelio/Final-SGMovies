@@ -19,6 +19,7 @@ export default new Vuex.Store({
     latestMovieList: [],
     latestMovieItem: [],
     movieItem: [],
+    searchedMovieList: [],
   },
   getters: {
     isAuthenticated(state) {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     getUserCreateStatus(state) {
       return state.userCreateStatus
+    },
+    getSearchMovieList(state) {
+      return state.searchedMovieList
     },
   },
   mutations: {
@@ -59,14 +63,20 @@ export default new Vuex.Store({
     },
     SET_LATEST_LAYER(state, movie) {
       state.latestMovieItem = movie
-    }
+    },
+    SEARCH_MOVIE(state, searchedMovieList) {
+      state.searchedMovieList = searchedMovieList
+      console.log(state.searchedMovieList)
+    },
+    FILTER_MOVIE(state, filterMovieList) {
+      state.movieList = filterMovieList
+    },
   },
   actions: {
     async CREATE_USER({ commit }, userInfo) {
       const USER_CREATE_URL = '/api/v1/accounts/signup/'
       const data = userInfo
       const response = await axios.post(USER_CREATE_URL, data)
-      console.log(response)
       const userCreateData = {
         'userInfo': response.data,
         'status': response.status
@@ -94,20 +104,21 @@ export default new Vuex.Store({
       let latestMovieList = response.data
       latestMovieList = latestMovieList.sort(function (a, b) {
         return b.release_date.replace(/-/g, '') - a.release_date.replace(/-/g, '');
-      }).slice(0, 40)
-
-      let result = [];
-      let latestMovieData = [];
-      for (let i=0; i<=latestMovieList.length; i++) {
-        if (i % 4 == 0 && i != 0) {
-          result.push(latestMovieData);
-          latestMovieData = [];
-        }
-        latestMovieData.push(latestMovieList[i]);
-      }
-      console.log(result)
-      commit('GET_LATEST_MOVIE_LIST', result)
-    }
+      }).slice(0, 10)
+      console.log(latestMovieList)
+      commit('GET_LATEST_MOVIE_LIST', latestMovieList)
+    },
+    async SEARCH_MOVIE({ commit }, keyword) {
+      const SEARCH_MOVIE_URL = `/api/v1/movies/search/${keyword}`
+      const response = await axios.get(SEARCH_MOVIE_URL)
+      commit('SEARCH_MOVIE', response.data)
+    },
+    async FILTER_MOVIE({ commit }, category) {
+      const FILTER_MOVIE_URL = `/api/v1/movies/${category}`
+      const response = await axios.get(FILTER_MOVIE_URL)
+      console.log(response.data)
+      commit('FILTER_MOVIE', response.data)
+    },
   },
   modules: {
   }

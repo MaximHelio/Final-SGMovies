@@ -13,13 +13,27 @@
         </div>
       </div>
       <div class="" style="right:0;">
-        <input type="text" class="me-3 search-box" :class="{ searching: searching }">
+        <input 
+          type="text" 
+          class="me-3 search-box" 
+          :class="{ searching: searching }"
+          @input=onSearchInput
+          v-model.trim=keyword
+        >
         <i class="fas fa-search fa-lg search" style="color:white;" @click=onSearch></i>
       </div>
     </nav>
-    <div class="row row-cols-4">
+    <div class="row row-cols-4" v-if="keyword.length === 0">
       <MovieListItem
         v-for="movie in movieList"
+        :key="movie.pk"
+        :movie="movie"
+        :genre="movie.genres"
+      />
+    </div>
+    <div class="row row-cols-4" v-else>
+      <MovieListItem
+        v-for="movie in searchMovieList"
         :key="movie.pk"
         :movie="movie"
         :genre="movie.genres"
@@ -41,31 +55,42 @@ export default {
     return {
       state: 1,
       searching: false,
+      keyword: '',
     }
   },
   computed: {
     movieList() {
       return this.$store.getters.getMovieList
+    },
+    searchMovieList() {
+      return this.$store.getters.getSearchMovieList
     }
   },
   methods: {
     all() {
       this.state = 1
+      this.$store.dispatch('GET_MOVIE_LIST')
+      document.addEventListener('scroll', _.throttle(this.checkBottom,500))
     },
     action() {
       this.state = 2
+      this.$store.dispatch('FILTER_MOVIE','액션')
     },
     comedy() {
       this.state = 3
+      this.$store.dispatch('FILTER_MOVIE','코미디')
     },
     horror() {
       this.state = 4
+      this.$store.dispatch('FILTER_MOVIE','공포')
     },
     animation() {
       this.state = 5
+      this.$store.dispatch('FILTER_MOVIE','애니메이션')
     },
     sf() {
       this.state = 6
+      this.$store.dispatch('FILTER_MOVIE','SF')
     },
     checkBottom() {
       console.log('scroll!!!')
@@ -77,6 +102,10 @@ export default {
     onSearch() {
       this.searching = !this.searching
     },
+    onSearchInput() {
+      _.throttle(this.$store.dispatch('SEARCH_MOVIE', this.keyword),150)
+      console.log(this.searchMovieList)
+    }
   },
   created() {
     this.$store.dispatch('GET_MOVIE_LIST')

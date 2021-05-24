@@ -25,4 +25,9 @@ urlpatterns = [
     # GET, POST http://localhost:8000/api/v1/latest/
     path('latest/', views.latest),
 
+    # 영화 검색
+    path('search/<str:keyword>/', views.search_movie),
+
+    # 영화 필터링
+    path('<str:category>/', views.filter_movie),
 ]

@@ -4,16 +4,18 @@
       <div class="container-fluid">
         <div>
           <img src="../assets/logo.png" alt="" class="logo">
-          <a class="ms-5" href="">영화 평가하기</a>
+          <router-link class="ms-5" to="/movie-evaluation">영화 평가하기</router-link>
         </div>
         <div class="user-info dropdown">
           <div class="" id="drop" data-bs-toggle="dropdown">
             <img src="../assets/man.jpg" alt="">
-            <!-- <p>{{ getUserInfo}}</p> -->
+            <p class="text-light">{{ getUserInfo }}</p>
           </div>
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
-            <li><a href="" class="dropdown-item">Profile</a></li>
+            <li>
+              <a href="" class="dropdown-item">Profile</a>
+            </li>
           </ul>
         </div>
       </div>
