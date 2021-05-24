@@ -2,6 +2,7 @@
   <div id="app">
     <div v-if="isAuthenticated">
       <Nav />
+      <router-view />
       <MovieView />
     </div>
     <div v-else>

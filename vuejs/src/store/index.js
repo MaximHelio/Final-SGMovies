@@ -19,6 +19,7 @@ export default new Vuex.Store({
     latestMovieList: [],
     latestMovieItem: [],
     movieItem: [],
+    searchedMovieList: [],
   },
   getters: {
     isAuthenticated(state) {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     getUserCreateStatus(state) {
       return state.userCreateStatus
+    },
+    getSearchMovieList(state) {
+      return state.searchedMovieList
     },
   },
   mutations: {
@@ -59,7 +63,14 @@ export default new Vuex.Store({
     },
     SET_LATEST_LAYER(state, movie) {
       state.latestMovieItem = movie
-    }
+    },
+    SEARCH_MOVIE(state, searchedMovieList) {
+      state.searchedMovieList = searchedMovieList
+      console.log(state.searchedMovieList)
+    },
+    FILTER_MOVIE(state, filterMovieList) {
+      state.movieList = filterMovieList
+    },
   },
   actions: {
     async CREATE_USER({ commit }, userInfo) {
@@ -107,7 +118,18 @@ export default new Vuex.Store({
       }
       console.log(result)
       commit('GET_LATEST_MOVIE_LIST', result)
-    }
+    },
+    async SEARCH_MOVIE({ commit }, keyword) {
+      const SEARCH_MOVIE_URL = `/api/v1/movies/search/${keyword}`
+      const response = await axios.get(SEARCH_MOVIE_URL)
+      commit('SEARCH_MOVIE', response.data)
+    },
+    async FILTER_MOVIE({ commit }, category) {
+      const FILTER_MOVIE_URL = `/api/v1/movies/${category}`
+      const response = await axios.get(FILTER_MOVIE_URL)
+      console.log(response.data)
+      commit('FILTER_MOVIE', response.data)
+    },
   },
   modules: {
   }
