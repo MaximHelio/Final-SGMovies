@@ -1,14 +1,9 @@
-
 <template>
   <swiper class="swiper example-3d" :options="swiperOption">
-    <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
-    <swiper-slide>Slide 4</swiper-slide>
-    <swiper-slide>Slide 5</swiper-slide>
-    <swiper-slide>Slide 6</swiper-slide>
-    <swiper-slide>Slide 7</swiper-slide>
-    <div class="swiper-pagination" slot="pagination"></div>
+    <swiper-slide v-for="movie in GetLatestMovieList" :key="movie.pk">
+      <img class="border w-100" :src="movie.poster" alt="">
+    </swiper-slide>
+  <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
 </template>
 
@@ -22,6 +17,12 @@
     components: {
       Swiper,
       SwiperSlide
+    },
+    props: {
+      GetLatestMovieList: {
+        type: Array,
+        required: true,
+      }
     },
     data() {
       return {
@@ -53,7 +54,9 @@
     padding-top: 50px;
     padding-bottom: 50px;
   }
-
+  .border {
+    border-radius: 40% 10% / 10% 10%;
+  }
   .swiper {
     height: 100%;
     width: 100%;
@@ -62,10 +65,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 300px;
+      width: 250px;
       height: 300px;
       text-align: center;
-      font-weight: bold;
       background-color: #2C8DFB;
       background-position: center;
       background-size: cover;
@@ -73,9 +75,9 @@
     }
     .swiper-pagination {
       ::v-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
-        background-color: #777;
+        background-color: #fefefe;
       }
     }
-
   }
+
 </style>

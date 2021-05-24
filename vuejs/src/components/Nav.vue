@@ -13,7 +13,9 @@
           </div>
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
-            <li><a href="" class="dropdown-item">Profile</a></li>
+            <li>
+              <a href="" class="dropdown-item">Profile</a>
+            </li>
           </ul>
         </div>
       </div>

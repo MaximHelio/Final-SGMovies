@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <img class="poster poster:hover"
+  <div class="d-inline-block">
+    <RecentMovieItemImg
+      class="poster poster:hover"
       v-for="movie in movieList"
       :src="movie.poster" :key="movie.pk"
       @click="foldingLatestArea"
-    >
+      :movie="movie"
+    />
   </div>
 </template>
 
 <script>
+import RecentMovieItemImg from '@/components/RecentMovieItemImg'
+
 export default {
   name: 'RecentMovieItem',
+  components: {
+    RecentMovieItemImg,
+  },
   props: {
     movieList: {
       type: Array,
@@ -20,6 +27,7 @@ export default {
   methods : {
     foldingLatestArea () {
       this.$store.commit('SET_LATEST_LAYER', this.movie)
+      // this.$emit('select-movie', /)
     }
   }
 }
@@ -28,7 +36,7 @@ export default {
 <style scoped>
 img.poster {
   width: 25%;
-  height: 350px;
+  height: 410px;
   object-fit: cover;
   cursor: pointer;
   transition: 0.3s;
