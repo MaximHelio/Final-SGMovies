@@ -66,7 +66,6 @@ export default new Vuex.Store({
       const USER_CREATE_URL = '/api/v1/accounts/signup/'
       const data = userInfo
       const response = await axios.post(USER_CREATE_URL, data)
-      console.log(response)
       const userCreateData = {
         'userInfo': response.data,
         'status': response.status
@@ -94,20 +93,11 @@ export default new Vuex.Store({
       let latestMovieList = response.data
       latestMovieList = latestMovieList.sort(function (a, b) {
         return b.release_date.replace(/-/g, '') - a.release_date.replace(/-/g, '');
-      }).slice(0, 40)
+      }).slice(0, 10)
 
-      let result = [];
-      let latestMovieData = [];
-      for (let i=0; i<=latestMovieList.length; i++) {
-        if (i % 4 == 0 && i != 0) {
-          result.push(latestMovieData);
-          latestMovieData = [];
-        }
-        latestMovieData.push(latestMovieList[i]);
-      }
-      console.log(result)
-      commit('GET_LATEST_MOVIE_LIST', result)
-    }
+      console.log(latestMovieList)
+      commit('GET_LATEST_MOVIE_LIST', latestMovieList)
+    },
   },
   modules: {
   }

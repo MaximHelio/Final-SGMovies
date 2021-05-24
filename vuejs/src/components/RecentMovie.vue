@@ -5,7 +5,11 @@
         <span class="fs-3 fw-bold">최신 영화</span>
       </div>
     </nav>
-    <RecentMovieCarousel />
+
+    <RecentMovieCarousel 
+      :GetLatestMovieList="GetLatestMovieList"
+    />
+      
   </div>
 </template>
 
@@ -18,12 +22,13 @@ export default {
     RecentMovieCarousel,
   },
   computed: {
+    GetLatestMovieList(){
+      return this.$store.getters.getLatestMovieList
+    }
   },
   created() {
+    this.$store.dispatch('GET_LATEST_MOVIE_LIST')
   },
 }
 </script>
 
-<style>
-
-</style>
