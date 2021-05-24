@@ -2,9 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+
 axios.defaults.baseURL = 'http://localhost:8000'
 
 Vue.use(Vuex)
+
 
 export default new Vuex.Store({
   state: {
@@ -43,10 +45,6 @@ export default new Vuex.Store({
     AUTH_USER(state, payload) {
       state.token = payload.token
       state.username = payload.username
-    },
-    LOGOUT(state) {
-      state.token = ''
-      localStorage.removeItem('token')
     },
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)

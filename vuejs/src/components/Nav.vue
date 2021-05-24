@@ -9,7 +9,7 @@
         <div class="user-info dropdown">
           <div class="" id="drop" data-bs-toggle="dropdown">
             <img src="../assets/man.jpg" alt="">
-            <p>{{ getUserInfo}}</p>
+            <!-- <p>{{ getUserInfo}}</p> -->
           </div>
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
