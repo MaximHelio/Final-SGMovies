@@ -9,6 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: {},
+    userCreateStatus: '',
     username: '',
     token: localStorage.getItem('token') || '',
     movieList: [],
@@ -30,14 +31,22 @@ export default new Vuex.Store({
     getLatestMovieList(state) {
       return state.latestMovieList
     },
+    getUserCreateStatus(state) {
+      return state.userCreateStatus
+    },
   },
   mutations: {
-    CREATE_USER(state, userInfo) {
-      state.userInfo = userInfo
+    CREATE_USER(state, userCreateData) {
+      state.userInfo = userCreateData.userInfo
+      state.userCreateStatus = userCreateData.status
     },
     AUTH_USER(state, payload) {
       state.token = payload.token
       state.username = payload.username
+    },
+    LOGOUT(state) {
+      state.token = ''
+      localStorage.removeItem('token')
     },
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)
@@ -60,13 +69,17 @@ export default new Vuex.Store({
       const data = userInfo
       const response = await axios.post(USER_CREATE_URL, data)
       console.log(response)
-      commit('CREATE_USER', response.data)
+      const userCreateData = {
+        'userInfo': response.data,
+        'status': response.status
+      }
+      commit('CREATE_USER', userCreateData)
     },
     async AUTH_USER({ commit }, userInfo) {
       const AUTH_USER_URL = '/api/token/'
       const data = userInfo
       const response = await axios.post(AUTH_USER_URL, data)
-      console.log(response)
+      
       const token = response.data.access
       const payload = {'username': userInfo.username, 'token': token}
       localStorage.setItem('token', token)
