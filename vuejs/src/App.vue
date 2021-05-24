@@ -28,7 +28,15 @@ export default {
     getUsername() {
       return this.$store.getters.getUserInfo
     }
-  }
+  },
+  methods: {
+    logout () {
+      this.$store.commit('LOGOUT')
+    },
+    profile () {
+      this.$store.commit('PROFILE')
+    }
+  },
 }
 </script>
 
@@ -63,11 +71,16 @@ p {
   cursor: pointer;
 }
 
-.user-info > img {
+.user-info img {
   width: 30px;
   height: 30px;
   border-radius: 15px;
   border: 1px solid orange;
+  background: url(/img/man.2669f94e.jpg);
+  object-fit: cover;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .user-info > p{
@@ -92,5 +105,9 @@ a{
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+nav.navbar {
+  list-style: none;
 }
 </style>
