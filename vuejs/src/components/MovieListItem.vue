@@ -1,24 +1,36 @@
 <template>
   <div>
-    <div class="col my-4 accordion" id="accordionExample">
-      <div class="movie collapsed" data-bs-toggle="collapse" :data-bs-target="`#id-${movie.id}`">
+    <div class="col my-4" id="">
+      <div class="movie" @click="isModalViewed=true">
         <img class="w-75" :src="movie.poster" alt="">
         <span class="mt-3">{{ movie.title }}</span>
       </div>
-      <div :id="`id-${movie.id}`" class="accordion-collapse collapse mt-4">
-        <div class="boxx"></div>
-      </div>
     </div>
+    <ModalView 
+      v-if="isModalViewed"
+      :movie="movie"
+      @close="isModalViewed=false"
+    />
   </div>
 </template>
 
 <script>
+import ModalView from "@/components/ModalView"
+
 export default {
   name: 'MovieListItem',
+  components: {
+    ModalView
+  },
   props: {
     movie: {
       type: Object,
       required: true,
+    }
+  },
+  data () {
+    return {
+      isModalViewed: false,
     }
   }
 }
@@ -38,9 +50,7 @@ export default {
     transform: scale(1.1);
   }
 
-  .boxx {
-    width: 1000px;
-    height: 100px;
-    background-color: orange;
+  .modal-dialog {
+    top: 30%;
   }
 </style>

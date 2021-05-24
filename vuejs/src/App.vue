@@ -1,18 +1,7 @@
 <template>
   <div id="app">
     <div v-if="isAuthenticated">
-      <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <div>
-            <img src="./assets/logo.png" alt="" class="logo">
-            <a class="ms-5" href="">영화 평가하기</a>
-          </div>
-          <div class="user-info">
-            <p>{{ getUserInfo}}</p>
-            <img src="./assets/man.jpg" alt="">
-          </div>
-        </div>
-      </nav>
+      <Nav />
       <MovieView />
     </div>
     <div v-else>
@@ -23,12 +12,14 @@
 <script>
 import LoginSignupView from '@/views/LoginSignupView'
 import MovieView from '@/views/MovieView'
+import Nav from '@/components/Nav'
 
 export default {
   name: 'App',
   components: {
     LoginSignupView,
-    MovieView
+    MovieView,
+    Nav,
   },
   computed: {
     isAuthenticated() {

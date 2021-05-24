@@ -1,16 +1,20 @@
 <template>
   <div>
-    <nav class="d-flex mt-5 align-items-center">
-      <div class="me-5">
+    <nav class="d-flex mt-5 align-items-center justify-content-between">
+      <div class="me-5 d-flex align-items-center">
         <span class="fs-3 fw-bold">기타 영화</span>
+        <div class="filter ms-5">
+          <span :class="{ pick: state == 1 }" @click=all>전체</span>
+          <span :class="{ pick: state == 2 }" @click=action>액션</span>
+          <span :class="{ pick: state == 3 }" @click=comedy>코미디</span>
+          <span :class="{ pick: state == 4 }" @click=horror>공포</span>
+          <span :class="{ pick: state == 5 }" @click=animation>애니메이션</span>
+          <span :class="{ pick: state == 6 }" @click=sf>SF</span>
+        </div>
       </div>
-      <div class="filter">
-        <span :class="{ pick: state == 1 }" @click=all>전체</span>
-        <span :class="{ pick: state == 2 }" @click=action>액션</span>
-        <span :class="{ pick: state == 3 }" @click=comedy>코미디</span>
-        <span :class="{ pick: state == 4 }" @click=horror>공포</span>
-        <span :class="{ pick: state == 5 }" @click=animation>애니메이션</span>
-        <span :class="{ pick: state == 6 }" @click=sf>SF</span>
+      <div class="" style="right:0;">
+        <input type="text" class="me-3 search-box" :class="{ searching: searching }">
+        <i class="fas fa-search fa-lg search" style="color:white;" @click=onSearch></i>
       </div>
     </nav>
     <div class="row row-cols-4">
@@ -25,6 +29,7 @@
 
 <script>
 import MovieListItem from '@/components/MovieListItem'
+import _ from 'lodash'
 
 export default {
   name: 'MovieList',
@@ -34,11 +39,11 @@ export default {
   data() {
     return {
       state: 1,
+      searching: false,
     }
   },
   computed: {
     movieList() {
-      console.log("Z")
       return this.$store.getters.getMovieList
     }
   },
@@ -62,15 +67,19 @@ export default {
       this.state = 6
     },
     checkBottom() {
+      console.log('scroll!!!')
       const {scrollTop, clientHeight, scrollHeight} = document.documentElement
       if (scrollHeight - scrollTop === clientHeight) {
         this.$store.dispatch('GET_MOVIE_LIST')
       }
-    }
+    },
+    onSearch() {
+      this.searching = !this.searching
+    },
   },
   created() {
     this.$store.dispatch('GET_MOVIE_LIST')
-    document.addEventListener('scroll', this.checkBottom)
+    document.addEventListener('scroll', _.throttle(this.checkBottom,500))
   },
 }
 </script>
@@ -92,5 +101,22 @@ export default {
   .pick {
     color: yellow;
     font-size: 17px;
+  }
+
+  .search-box {
+    width: 0;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    transition: all .5s;
+  }
+
+  .searching {
+    width: 250px;
+    padding: 5px;
+  }
+
+  .search {
+    cursor: pointer;
   }
 </style>

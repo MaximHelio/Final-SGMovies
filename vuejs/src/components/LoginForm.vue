@@ -52,12 +52,13 @@ export default {
     position: absolute;
     left: 30px;
     transition: all .5s ease;
+    color: rgb(143, 143, 143);
   }
 
   .area input:focus + label,
   .area input:valid + label {
     font-size: 13px;
-    color: #166cea;
+    color: yellow;
   }
 
 </style>
