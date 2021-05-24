@@ -1,6 +1,10 @@
 <template>
-  <div class="carousel-item">
-    <img class="poster" :src="item.poster"  v-for="item in movie" :key="item.id">
+  <div>
+    <img class="poster poster:hover"
+      v-for="movie in movieList"
+      :src="movie.poster" :key="movie.pk"
+      @click="foldingLatestArea"
+    >
   </div>
 </template>
 
@@ -8,14 +12,17 @@
 export default {
   name: 'RecentMovieItem',
   props: {
-    movie: {
-      type: Object,
+    movieList: {
+      type: Array,
       required: true,
     }
   },
+  methods : {
+    foldingLatestArea () {
+      this.$store.commit('SET_LATEST_LAYER', this.movie)
+    }
+  }
 }
-
-console.log(this)
 </script>
 
 <style scoped>

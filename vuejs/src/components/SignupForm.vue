@@ -16,6 +16,7 @@
       <input v-model="userInfo.password_confirmation" type="password" name="pw-confirm" id="pw-confirm" autocomplete="off" required>
       <label for="pw-confirm" id="pw-lb">PASSWORD CONFIRM</label>
     </div>
+    <p v-if="getUserCreateStatus === 200">회원가입 완료</p>
     <div class="d-grid gap-2 col-12 mx-auto">
       <button @click="onSubmit" class="btn btn-light mt-4">SignUp</button>
     </div>
@@ -33,6 +34,11 @@ export default {
         password: '',
         password_confirmation: '',
       }
+    }
+  },
+  computed: {
+    getUserCreateStatus() {
+      return this.$store.getters.getUserCreateStatus
     }
   },
   methods: {
@@ -68,6 +74,6 @@ export default {
   .area input:focus + label,
   .area input:valid + label {
     font-size: 13px;
-    color: #166cea;
+    color: yellow;
   }
 </style>

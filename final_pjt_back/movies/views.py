@@ -60,6 +60,7 @@ def movie_detail(request, todo_id):
         movies.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 # 댓글 전체 리스트 가져오기
 @api_view()
 def comment_list(request):
@@ -100,3 +101,15 @@ def comment_detail(request, comment_id):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(data=serializer.data)
+
+# Create your views here.
+@api_view(['GET'])
+def latest(request):
+    # 1. 모든 movie list를 가져온다
+    movies = Movie.objects.all()
+
+    # 2. serialize
+    serializer = MovieSerializer(movies, many=True)
+    # 3. 응답
+    return Response(data=serializer.data)
+

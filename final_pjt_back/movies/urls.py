@@ -10,6 +10,7 @@ urlpatterns = [
     path('<int:todo_id>/', views.movie_detail),
 
 
+
     # 전체 댓글 목록 가져오기
     # GET, POST http://localhost:8000/api/v1/comments/
     path('comments/', views.comment_list),
@@ -20,4 +21,8 @@ urlpatterns = [
     # 댓글 수정하기
     # GET, POST http://localhost:8000/api/v1/comments/
     path('comments/<int:comment_id>/', views.comment_detail),
+
+    # GET, POST http://localhost:8000/api/v1/latest/
+    path('latest/', views.latest),
+
 ]

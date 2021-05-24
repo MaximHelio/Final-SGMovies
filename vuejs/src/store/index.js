@@ -9,11 +9,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: {},
+    userCreateStatus: '',
     username: '',
     token: localStorage.getItem('token') || '',
     movieList: [],
     page: 1,
     latestMovieList: [],
+    latestMovieItem: [],
+    movieItem: [],
   },
   getters: {
     isAuthenticated(state) {
@@ -28,14 +31,22 @@ export default new Vuex.Store({
     getLatestMovieList(state) {
       return state.latestMovieList
     },
+    getUserCreateStatus(state) {
+      return state.userCreateStatus
+    },
   },
   mutations: {
-    CREATE_USER(state, userInfo) {
-      state.userInfo = userInfo
+    CREATE_USER(state, userCreateData) {
+      state.userInfo = userCreateData.userInfo
+      state.userCreateStatus = userCreateData.status
     },
     AUTH_USER(state, payload) {
       state.token = payload.token
       state.username = payload.username
+    },
+    LOGOUT(state) {
+      state.token = ''
+      localStorage.removeItem('token')
     },
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)
@@ -43,6 +54,13 @@ export default new Vuex.Store({
     },
     GET_LATEST_MOVIE_LIST(state, movieList) {
       state.latestMovieList = movieList
+    },
+    LOGOUT(state) {
+      state.token = ''
+      localStorage.removeItem('token')
+    },
+    SET_LATEST_LAYER(state, movie) {
+      state.latestMovieItem = movie
     }
   },
   actions: {
@@ -51,13 +69,17 @@ export default new Vuex.Store({
       const data = userInfo
       const response = await axios.post(USER_CREATE_URL, data)
       console.log(response)
-      commit('CREATE_USER', response.data)
+      const userCreateData = {
+        'userInfo': response.data,
+        'status': response.status
+      }
+      commit('CREATE_USER', userCreateData)
     },
     async AUTH_USER({ commit }, userInfo) {
       const AUTH_USER_URL = '/api/token/'
       const data = userInfo
       const response = await axios.post(AUTH_USER_URL, data)
-      console.log(response)
+      
       const token = response.data.access
       const payload = {'username': userInfo.username, 'token': token}
       localStorage.setItem('token', token)
@@ -69,16 +91,16 @@ export default new Vuex.Store({
       commit('GET_MOVIE_LIST', response.data)
     },
     async GET_LATEST_MOVIE_LIST({ commit }) {
-      const LATEST_MOVIE_LIST_URL = '/api/v1/movies/'
+      const LATEST_MOVIE_LIST_URL = '/api/v1/movies/latest'
       const response = await axios.get(LATEST_MOVIE_LIST_URL)
       let latestMovieList = response.data
       latestMovieList = latestMovieList.sort(function (a, b) {
         return b.release_date.replace(/-/g, '') - a.release_date.replace(/-/g, '');
-      }).slice(0, 41)
+      }).slice(0, 40)
 
       let result = [];
       let latestMovieData = [];
-      for (let i=0; i<latestMovieList.length; i++) {
+      for (let i=0; i<=latestMovieList.length; i++) {
         if (i % 4 == 0 && i != 0) {
           result.push(latestMovieData);
           latestMovieData = [];
