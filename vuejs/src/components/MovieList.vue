@@ -16,8 +16,9 @@
     <div class="row row-cols-4">
       <MovieListItem
         v-for="movie in movieList"
-        :key="movie.id"
+        :key="movie.pk"
         :movie="movie"
+        :genre="movie.genres"
       />
     </div>
   </div>
