@@ -6,8 +6,12 @@ from django.core.paginator import Paginator
 
 from django.shortcuts import get_object_or_404
 
-from .serializers import MovieSerializer
-from .models import Movie
+from .serializers import (
+    MovieSerializer,
+    CommentSerializer
+)
+from .models import Movie, Comment
+
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -56,6 +60,48 @@ def movie_detail(request, todo_id):
         movies.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+# 댓글 전체 리스트 가져오기
+@api_view()
+def comment_list(request):
+    comments = Comment.objects.all()
+    serializer = CommentSerializer(comments, many=True)
+    return Response(data=serializer.data)
+
+# 댓글 만들기
+@api_view(['POST'])
+def create_comment(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+
+    serializer = CommentSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        # 댓글 정보 영화에 저장
+        serializer.save(movie=movie)
+        return Response(data=serializer.data)
+
+# 댓글 수정 및 삭제
+# http://localhost:8000/api/v1/comments/<int:comment_id>/
+@api_view(['GET', 'DELETE', 'PUT'])
+def comment_detail(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    
+    if request.method == 'GET':
+        serializer = CommentSerializer(comment)
+        return Response(data=serializer.data)
+
+    elif request.method == 'DELETE':
+        comment = comment.delete()
+        data = {
+            'message': '댓글 삭제가 완료되었습니다.'
+        }
+        return Response(data=data, status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == 'PUT':
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(data=serializer.data)
+
 # Create your views here.
 @api_view(['GET'])
 def latest(request):
@@ -66,3 +112,4 @@ def latest(request):
     serializer = MovieSerializer(movies, many=True)
     # 3. 응답
     return Response(data=serializer.data)
+
