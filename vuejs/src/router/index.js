@@ -1,14 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Home from '@/views/Home'
 import MovieEvaluation from '@/views/MovieEvaluation'
+import Profile from '@/views/Profile'
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
+  {
     path: '/movie-evaluation',
     name: 'MovieEvaluation',
     component: MovieEvaluation,
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
   }
 ]
 

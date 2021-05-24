@@ -2,7 +2,7 @@
   <div>
     <div class="col my-4" id="">
       <div class="movie" @click="isModalViewed=true">
-        <img class="w-75" :src="movie.poster" alt="">
+        <img class="w-75 border" :src="movie.poster" alt="">
         <span class="mt-3">{{ movie.title }}</span>
       </div>
     </div>
@@ -49,8 +49,8 @@ export default {
     box-shadow: 0 0 5px white;
     transform: scale(1.1);
   }
-
   .modal-dialog {
     top: 30%;
   }
+
 </style>
