@@ -3,7 +3,9 @@
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <div>
-          <img src="../assets/logo.png" alt="" class="logo">
+          <router-link to="/">
+            <img src="../assets/logo.png" alt="" class="logo">
+          </router-link>
           <router-link class="ms-5" to="/movie-evaluation">영화 평가하기</router-link>
         </div>
         <div class="user-info dropdown">
@@ -14,7 +16,7 @@
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
             <li>
-              <a href="" class="dropdown-item">Profile</a>
+              <router-link to="/profile">Profile</router-link>
             </li>
           </ul>
         </div>
