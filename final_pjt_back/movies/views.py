@@ -1,4 +1,5 @@
 from rest_framework import status
+from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.paginator import Paginator
@@ -62,7 +63,7 @@ def movie_detail(request, todo_id):
 
 
 # 댓글 전체 리스트 가져오기
-@api_view()
+@api_view(['GET'])
 def comment_list(request):
     comments = Comment.objects.all()
     serializer = CommentSerializer(comments, many=True)
@@ -70,17 +71,21 @@ def comment_list(request):
 
 # 댓글 만들기
 @api_view(['POST'])
-def create_comment(request, movie_id):
+def create_comment(request):
+    movie_id = request.POST.get('movie')
+    user_id = request.POST.get('user')
+
     movie = get_object_or_404(Movie, pk=movie_id)
+    user = get_object_or_404(get_user_model(), pk=user_id)
 
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         # 댓글 정보 영화에 저장
-        serializer.save(movie=movie)
+        comment = serializer.save(movie=movie, user=user)
         return Response(data=serializer.data)
 
 # 댓글 수정 및 삭제
-# http://localhost:8000/api/v1/comments/<int:comment_id>/
+# http://localhost:8000/api/v1/movies/comments/<int:comment_id>/
 @api_view(['GET', 'DELETE', 'PUT'])
 def comment_detail(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
