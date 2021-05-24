@@ -16,7 +16,7 @@ urlpatterns = [
     path('comments/', views.comment_list),
 
     # 댓글 생성하기
-    path('movies/<int:article_id>/comments/', views.create_comment),
+    path('createcomments/', views.create_comment),
 
     # 댓글 수정하기
     # GET, POST http://localhost:8000/api/v1/comments/
