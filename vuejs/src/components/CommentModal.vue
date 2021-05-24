@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
   .comment-container {
     display: flex;
@@ -60,7 +60,7 @@ export default {
 
   .rating { 
     border: none;
-    float: left;
+
   }
 
   .rating > input { display: none; } 

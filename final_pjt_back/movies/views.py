@@ -1,3 +1,4 @@
+import re
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -62,7 +63,7 @@ def movie_detail(request, todo_id):
 
 
 # 댓글 전체 리스트 가져오기
-@api_view()
+@api_view([])
 def comment_list(request):
     comments = Comment.objects.all()
     serializer = CommentSerializer(comments, many=True)
@@ -113,3 +114,25 @@ def latest(request):
     # 3. 응답
     return Response(data=serializer.data)
 
+
+@api_view(['GET'])
+def search_movie(request, keyword):
+    reg = re.compile(r'[a-zA-Z]')
+
+    if reg.match(keyword):
+        movies = Movie.objects.filter(original_title__contains=keyword)
+    else:
+        movies = Movie.objects.filter(title__contains=keyword)
+    
+    serializer = MovieSerializer(movies, many=True)
+    
+    return Response(data=serializer.data)
+
+
+@api_view((['GET']))
+def filter_movie(request, category):
+    movies = Movie.objects.filter(genres__contains=category)
+
+    serializer = MovieSerializer(movies, many=True)
+
+    return Response(data=serializer.data)
