@@ -1,23 +1,25 @@
 <template>
   <div class="">
     <transition name="modal">
-        <div class="modal-mask" @click="$emit('close')">
+        <div class="modal-mask"> <!-- @click="$emit('close')" -->
           <div class="modal-wrapper">
             <div class="modal-container">
               <!-- header -->
               <div class="d-flex justify-content-between">
-                <div class="icons">
-                  <i class="fas fa-info-circle fa-2x me-4"></i>
-                  <i class="fas fa-comment-dots fa-2x me-4"></i>
-                  <i class="fas fa-video fa-2x"></i>
+                <div class="icons ms-5">
+                  <i class="fas fa-info-circle fa-2x me-4" @click="movieInfo" :class="{ picked: category === 'info' }"></i>
+                  <i class="fas fa-comment-dots fa-2x me-4" @click="movieComment" :class="{ picked: category === 'comment' }"></i>
+                  <i class="fas fa-video fa-2x" @click="movieTrail" :class="{ picked: category === 'trail' }"></i>
                 </div>
-                <div>
+                <div class="me-5">
+                  <i v-if="category === 'comment'" class="fas fa-edit fa-2x write-button" @click="showModal = true"></i>
+                  <CommentModal v-if="showModal" @close="showModal = false"/>
                   <i class="fas fa-times fa-2x cancel-button" @click="$emit('close')" style="color:white;"></i>
                 </div>
               </div>
               <!-- body -->
-              <div class="modal-body d-flex justify-content-between">
-                <div>
+              <div v-if="category === 'info' " class="modal-body d-flex justify-content-between">
+                <div class="mt-5">
                   <h1>{{ movie.title }}</h1>
                   <p>{{ movie.vote_average }}/10</p>
                   <p>{{ movie.overview }}</p>
@@ -26,11 +28,42 @@
                   <img :src="movie.poster" alt="" class="poster">
                 </div>
               </div>
-
-              <div class="">
-                <slot name="footer">
-                  default footer
-                </slot>
+              <div v-if="category === 'comment' " class="modal-body comment-page d-flex justify-content-between align-items-center">
+                <div class="w-75 text-center">
+                  <p>평점: {{ movie.vote_average }}</p>
+                  <p>개봉일: {{ movie.release_date }}</p>
+                  <p>런타임: {{ movie.runtime }}</p>
+                  <p>댓글 수: ???</p>
+                </div>
+                <div class="row row-cols-2">
+                  <div class="col">
+                    <h1>Username</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
+                  </div>
+                  <div class="col">
+                    <h1>Username</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
+                  </div>
+                  <div class="col">
+                    <h1>Username</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
+                  </div>
+                  <div class="col">
+                    <h1>Username</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
+                  </div>
+                  <div class="col">
+                    <h1>Username</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
+                  </div>
+                  <div class="col">
+                    <h1>Username</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
+                  </div>
+                </div>
+              </div>
+              <div v-if="category === 'trail' " class="modal-body d-flex justify-content-between">
+                trailer
               </div>
             </div>
           </div>
@@ -40,14 +73,36 @@
 </template>
 
 <script>
+import CommentModal from '@/components/CommentModal'
+
 export default {
   name: 'ModalView',
+  components: {
+    CommentModal,
+  },
   props: {
     movie: {
       type: Object,
       required: true,
     }
   },
+  data() {
+    return {
+      category: 'info',
+      showModal: false,
+    }
+  },
+  methods: {
+    movieInfo() {
+      this.category = 'info'
+    },
+    movieComment() {
+      this.category = 'comment'
+    },
+    movieTrail() {
+      this.category = 'trail'
+    },
+  }
 }
 </script>
 
@@ -78,7 +133,7 @@ export default {
   height: 81%;
   
   margin: 0px auto;
-  padding: 20px 30px;
+  padding: 20px 0 0 0;
   background-color: black;
   border-radius: 2px;
   box-shadow: 0 0 15px rgba(255, 254, 254);
@@ -108,21 +163,37 @@ export default {
 
 .icons > i {
   color: grey;
+  cursor: pointer;
+}
+
+.icons .picked {
+  color: yellow;
 }
 
 .poster {
   float: right;
   top: 0;
   width: 450px;
-  height: 100%;
+  height: 70vh;
 }
 
 .cancel-button {
   cursor: pointer;
 }
 
-.cancel-button:hover {
-  color: red;
+.write-button {
+  color: white;
+  margin-right: 20px;
+  cursor: pointer;
 }
+
+.write-button:hover {
+  color: yellow;
+}
+
+.comment-page {
+  top: 18%;
+}
+
 
 </style>

@@ -44,10 +44,6 @@ export default new Vuex.Store({
       state.token = payload.token
       state.username = payload.username
     },
-    LOGOUT(state) {
-      state.token = ''
-      localStorage.removeItem('token')
-    },
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)
       state.page += 1
