@@ -25,7 +25,7 @@ class Comment(models.Model):
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='comments')
     content = models.CharField(max_length=100)
-    rank = models.IntegerField(default=0)
+    rank = models.FloatField(default=0)
     
     def __str__(self):
         return self.content

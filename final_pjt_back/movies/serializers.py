@@ -10,9 +10,9 @@ class MovieSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment 
-        fields = ('id','movie', 'rank', 'content')
+        fields = ('user','movie', 'rank', 'content')
         # 댓글을 작성할 때, movie는 입력하지 않을 것이므로, movie필드는 읽기 전용.
-        read_only_fields = ['movie']
+        read_only_fields = ['movie', 'user']
 
 class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
