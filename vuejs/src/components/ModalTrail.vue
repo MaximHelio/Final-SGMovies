@@ -1,16 +1,17 @@
 <template>
+
   <div class="container mb-4">
     <div class="container h-100">
       <div class="h-100 video-container embed-responsive embed-responsive-16by9" v-if="videoList.length">
         <iframe width="100%" height="100%" class="embed-responsive-item" :src="videoUrl" allowfullscreen frameborder="0"/>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+
 
 const YOUTUBE_API_KEY = 'AIzaSyBCNyVF3W6jLT2rmdc5du7hHM-dXJWAoPg'
 const YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3/search'
@@ -28,6 +29,7 @@ export default {
       videoList: ''
     }
   },
+
   methods: {
     async searchVideo() {
       const keyword = '공식 예고편 ' + this.movie.title
@@ -47,6 +49,7 @@ export default {
     this.searchVideo()
   },
   computed: {
+
     videoUrl() {
       const videoId = this.videoList[0].id.videoId
       return `https://www.youtube.com/embed/${videoId}`
