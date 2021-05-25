@@ -1,10 +1,12 @@
 <template>
   <div class="container my-4">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="container">
       <h2>예고편</h2>
 
-      <div class="video container embed-responsive embed-responsive-16by9" v-if="video">
-        <iframe :src="videoUrl" frameborder="0"/>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="video-container embed-responsive embed-responsive-16by9 w-100" v-if="videoList.length">
+          <iframe class="embed-responsive-item" :src="videoUrl" allowfullscreen frameborder="0"/>
+        </div>
       </div>
     </div>
   </div>
@@ -13,7 +15,7 @@
 <script>
 import axios from 'axios'
 
-const YOUTUBE_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+const YOUTUBE_API_KEY = 'AIzaSyBCNyVF3W6jLT2rmdc5du7hHM-dXJWAoPg'
 const YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 export default {
@@ -29,9 +31,9 @@ export default {
       videoList: ''
     }
   },
-  computed: {
+  methods: {
     async searchVideo() {
-      const keyword = '공식 예고편' + this.movie.title
+      const keyword = '공식 예고편 ' + this.movie.title
       const config = {
         params: {
           part: 'snippet',
@@ -43,10 +45,11 @@ export default {
       const response = await axios.get(YOUTUBE_API_URL, config)
       this.videoList = response.data.items
     },
-
-    thumbUrl() {
-      return this.videoList[0].snippet.thumbnails.medium.url
-    },
+  },
+  created() {
+    this.searchVideo()
+  },
+  computed: {
     videoUrl() {
       const videoId = this.videoList[0].id.videoId
       return `https://www.youtube.com/embed/${videoId}`
