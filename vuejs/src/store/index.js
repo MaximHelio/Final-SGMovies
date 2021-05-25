@@ -20,7 +20,7 @@ export default new Vuex.Store({
     latestMovieItem: [],
     movieItem: [],
     searchedMovieList: [],
-
+    commentList: [],
     comments: {},
   },
   getters: {
@@ -42,9 +42,8 @@ export default new Vuex.Store({
     getSearchMovieList(state) {
       return state.searchedMovieList
     },
-    
-    getMovieComment(state) {
-      return state.comments
+    getMovieCommentList(state) {
+      return state.commentList
     },
   },
   mutations: {
@@ -79,9 +78,12 @@ export default new Vuex.Store({
     FILTER_MOVIE(state, filterMovieList) {
       state.movieList = filterMovieList
     },
-
     CREATE_COMMENT(state, comments) {
       state.comments = comments
+    },
+    GET_MOVIE_COMMENT(state, commentList) {
+      state.commentList = commentList
+      console.log(state.commentList)
     },
   },
   actions: {
@@ -151,6 +153,11 @@ export default new Vuex.Store({
         'comments': response.data,
       }
       commit('CREATE_COMMENT', commentCreateData)
+    },
+    async GET_MOVIE_COMMENT({ commit }, movie_id) {
+      const GET_COMMENT_URL = `/api/v1/movies/${movie_id}/comments/`
+      const response = await axios.get(GET_COMMENT_URL)
+      commit('GET_MOVIE_COMMENT', response.data)
     },
   },
   modules: {
