@@ -9,11 +9,9 @@ urlpatterns = [
     # GET, PIT, DELETE  http://localhost:8000/api/v1/todos/:id
     path('<int:todo_id>/', views.movie_detail),
 
-
-
-    # 특정 영화 전체 댓글 목록 가져오기
+    # 전체 댓글 목록 가져오기
     # GET http://localhost:8000/api/v1/movies/comments/
-    path('<int:movie_id>/comments/', views.comment_list),
+    path('comments/', views.comment_list),
 
     # 댓글 생성하기
     # POST http://localhost:8000/api/v1/movies/createcomments/
@@ -26,6 +24,8 @@ urlpatterns = [
     # GET, POST http://localhost:8000/api/v1/latest/
     path('latest/', views.latest),
 
+    # MovieCrousel에 들어갈 부분
+    path('best/', views.best),
     # 영화 검색
     path('search/<str:keyword>/', views.search_movie),
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="d-flex mt-5 align-items-center justify-content-between">
+    <nav class="d-flex mt-5 align-items-center justify-content-between movie-list-nav">
       <div class="me-5 d-flex align-items-center">
         <span class="fs-3 fw-bold">기타 영화</span>
         <div class="filter ms-5">
@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style>
-  nav span {
+  nav.movie-list-nav span {
     color: white;
   }
   .filter span {

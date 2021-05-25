@@ -1,75 +1,127 @@
 <template>
-  <div>
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="../assets/man.jpg" class="d-block w-100 image" alt="...">
-          <div class="img-content">
-            <h1>Hi, there</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br>
-                Fugiat sunt in expedita unde beatae hic recusandae sequi fugit minima? <br>
-                Tempore distinctio assumenda labore laudantium dignissimos ad facilis, ipsam repellat nostrum?</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="../assets/cafe.jpg" class="d-block w-100 image" alt="...">
-          <div class="img-content">
-            <h1>Hi, there</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br>
-                Fugiat sunt in expedita unde beatae hic recusandae sequi fugit minima? <br>
-                Tempore distinctio assumenda labore laudantium dignissimos ad facilis, ipsam repellat nostrum?</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="../assets/rome.jpg" class="d-block w-100 image" alt="...">
-          <div class="img-content">
-            <h1>Hi, there</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br>
-                Fugiat sunt in expedita unde beatae hic recusandae sequi fugit minima? <br>
-                Tempore distinctio assumenda labore laudantium dignissimos ad facilis, ipsam repellat nostrum?</p>
-          </div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
+  <div class="thumb-example">
+    <!-- swiper1 -->
+    <swiper class="swiper gallery-top" :options="swiperOptionTop" ref="swiperTop">
+      <swiper-slide v-for="movie in GetBestMovieList" :key="movie.pk">
+        <img class="w-100 gallery-top-image" :src="movie.poster">
+      </swiper-slide>
+      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+      <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+    </swiper>
+    <!-- swiper2 Thumbs 밑에 있는  -->
+    <swiper class="swiper gallery-thumbs" :options="swiperOptionThumbs" ref="swiperThumbs">
+      <swiper-slide v-for="movie in GetBestMovieList" :key="movie.pk">
+        <img class="gallery-thumbs-image" :src="movie.poster">
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'MovieCarousel',
-}
+  import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+  import 'swiper/css/swiper.css'
 
+  export default {
+    name: 'swiper-example-thumbs-gallery',
+    title: 'Thumbs gallery with Two-way control',
+    components: {
+      Swiper,
+      SwiperSlide
+    },
+    computed: {
+      GetBestMovieList(){
+        return this.$store.getters.getBestMovieList
+      }
+    },
+    data() {
+      return {
+        swiperOptionTop: {
+          loop: true,
+          loopedSlides: 5, // looped slides should be the same
+          spaceBetween: 10,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        },
+        swiperOptionThumbs: {
+          loop: true,
+          loopedSlides: 5, // looped slides should be the same
+          spaceBetween: 10,
+          centeredSlides: true,
+          slidesPerView: 'auto',
+          touchRatio: 0.2,
+          slideToClickedSlide: true
+        }
+      }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        const swiperTop = this.$refs.swiperTop.$swiper
+        const swiperThumbs = this.$refs.swiperThumbs.$swiper
+        swiperTop.controller.control = swiperThumbs
+        swiperThumbs.controller.control = swiperTop
+      })
+    }
+  }
+  console.log("ZZZ")
+  console.log(this)
 </script>
 
-<style>
-  .image {
-    width: 100% !important;
-    height: 700px !important;
-    display: flex !important;
-    position: relative;
-    opacity: 0.6;
-    
+<style lang="scss" scoped>
+  .thumb-example {
+    height: 480px;
   }
-  
-  .img-content {
-    color: white;
-    position: absolute;
-    top: 68%;
-    left: 10%;
-    text-align: left;
-    text-shadow: 2px 4px 1px rgba(0,0,0,1);
+
+  .swiper {
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+
+      &.slide-1 {
+        background-image:url('/images/example/1.jpg');
+      }
+      &.slide-2 {
+        background-image:url('/images/example/2.jpg');
+      }
+      &.slide-3 {
+        background-image:url('/images/example/4.jpg');
+      }
+      &.slide-4 {
+        background-image:url('/images/example/5.jpg');
+      }
+      &.slide-5 {
+        background-image:url('/images/example/6.jpg');
+      }
+    }
+
+    &.gallery-top {
+      height: 70%;
+      width: 100%;
+    }
+    &.gallery-thumbs {
+      height: 30%;
+      box-sizing: border-box;
+    }
+    &.gallery-thumbs .swiper-slide {
+      width: 25%;
+      height: 100%;
+      opacity: 0.4;
+    }
+    &.gallery-thumbs .swiper-slide-active {
+      opacity: 1;
+    }
+  }
+
+  img.gallery-top-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  img.gallery-thumbs-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 </style>

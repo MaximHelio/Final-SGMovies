@@ -10,8 +10,7 @@ from django.shortcuts import get_object_or_404
 
 from .serializers import (
     MovieSerializer,
-    CommentSerializer,
-    WishlistSerializer
+    CommentSerializer
 )
 from .models import Movie, Comment
 
@@ -65,36 +64,23 @@ def movie_detail(request, todo_id):
 
 
 # 댓글 전체 리스트 가져오기
+
 @api_view(['GET'])
-def comment_list(request, movie_id):
-    print(movie_id)
-    comments = Comment.objects.filter(movie_id=movie_id)
-    print(comments)
+def comment_list(request):
+    comments = Comment.objects.all()
     serializer = CommentSerializer(comments, many=True)
     return Response(data=serializer.data)
-    # comments = Comment.objects.all()
-    # serializer = CommentSerializer(comments, many=True)
-    # return Response(data=serializer.data)
 
 # 댓글 만들기
 @api_view(['POST'])
 def create_comment(request):
-    movie_id = request.data.get('movieId')
-    username = request.data.get('userId')
-    content = request.data.get('comment')
-    rank = float(request.data.get('rank'))
-    print(movie_id, username)
-    print(request.data)
+    movie_id = request.POST.get('movie')
+    user_id = request.POST.get('user')
 
-    movie = get_object_or_404(Movie, id=movie_id)
-    user = get_object_or_404(get_user_model(), username=username)
-    data = {
-        'content': content,
-        'rank': rank,
-        'username': username,
-    }
+    movie = get_object_or_404(Movie, pk=movie_id)
+    user = get_object_or_404(get_user_model(), pk=user_id)
 
-    serializer = CommentSerializer(data=data)
+    serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         # 댓글 정보 영화에 저장
         comment = serializer.save(movie=movie, user=user)
@@ -119,7 +105,7 @@ def comment_detail(request, comment_id):
     
     elif request.method == 'PUT':
         serializer = CommentSerializer(comment, data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid(raise_exception=True): 
             serializer.save()
             return Response(data=serializer.data)
 
@@ -128,10 +114,16 @@ def comment_detail(request, comment_id):
 def latest(request):
     # 1. 모든 movie list를 가져온다
     movies = Movie.objects.all()
-
     # 2. serialize
     serializer = MovieSerializer(movies, many=True)
     # 3. 응답
+    return Response(data=serializer.data)
+
+
+@api_view(['GET'])
+def best(request):
+    movies = Movie.objects.order_by('vote_average')[:5]
+    serializer = MovieSerializer(movies, many=True)
     return Response(data=serializer.data)
 
 
@@ -160,20 +152,5 @@ def filter_movie(request, category):
 
 @api_view(['POST'])
 def check_movie(request):
-    username = request.data.get('username')
-    movie_id = request.data.get('movie')
-
-    user = get_object_or_404(get_user_model(), username=username)
-    movie = get_object_or_404(Movie, id=movie_id)
-
-    data = {
-        'user': user,
-        'movie': movie,
-    }
-    
-    serializer = WishlistSerializer(data=data)
-
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=user, movie=movie)
-        return Response(data=serializer.data)
+    print(request.data)
     return Response({'message':'wait'})
