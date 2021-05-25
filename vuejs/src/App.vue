@@ -1,11 +1,14 @@
 <template>
   <div id="app">
     <div v-if="isAuthenticated">
-      <Nav />
-      <Profile @profile-page="profilePage"/>
-      <router-view />
-      <div>
-        <MovieView v-if="page==='home'"/>
+      <Nav
+        @change-page="evalPage"
+        @home-page='homePage'
+        @profile-page="profilePage"
+      />
+      <router-view/>
+      <div v-if="page === 'home'">
+        <MovieView />
       </div>
     </div>
     <div v-else>
@@ -45,9 +48,15 @@ export default {
     logout () {
       this.$store.commit('LOGOUT')
     },
-    // profile () {
-    //   this.$store.commit('PROFILE')
-    // },
+    profile () {
+      this.$store.commit('PROFILE')
+    },
+    evalPage() {
+      this.page = 'eval'
+    },
+    homePage() {
+      this.page = 'home'
+    }
     profilePage() {
       this.page="profile"
     },

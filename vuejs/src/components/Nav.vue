@@ -3,15 +3,21 @@
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <div>
-          <router-link to="/home">
-            <img src="../assets/logo.png" alt="" class="logo">
+
+          <router-link to="/">
+            <img @click="homePage" src="../assets/logo.png" alt="" class="logo">
           </router-link>
-          <router-link class="ms-5" to="/movie-evaluation">영화 평가하기</router-link>
+          <router-link 
+            class="ms-5" 
+            to="/movie-evaluation" 
+          >
+            <span @click="changePage">영화 평가하기</span>
+          </router-link>
         </div>
         <div class="user-info dropdown">
           <div class="" id="drop" data-bs-toggle="dropdown">
             <img src="../assets/man.jpg" alt="">
-            <p class="text-light">{{ getUserInfo }}</p>
+            <p class="text-light">{{ getUser }}</p>
           </div>
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
@@ -28,14 +34,25 @@
 <script>
 export default {
   name: 'Nav',
+
+  data() {
+    return {
+    }
+  },
   computed: {
     getUser() {
-      return localStorage.getItem("username")
-    },
+      return localStorage.getItem('username')
+    }
   },
   methods: {
     logout() {
       this.$store.commit('LOGOUT')
+    },
+    changePage() {
+      this.$emit('change-page')
+    },
+    homePage() {
+      this.$emit('home-page')
     },
     profilePage() {
       this.$emit('profile-page')

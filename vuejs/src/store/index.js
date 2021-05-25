@@ -55,7 +55,7 @@ export default new Vuex.Store({
     AUTH_USER(state, payload) {
       state.token = payload.token
       state.username = payload.username
-      localStorage.setItem("username", state.username)
+      localStorage.setItem('username', state.username)
     },
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)
@@ -67,6 +67,7 @@ export default new Vuex.Store({
     LOGOUT(state) {
       state.token = ''
       localStorage.removeItem('token')
+      localStorage.removeItem('username')
     },
     SET_LATEST_LAYER(state, movie) {
       state.latestMovieItem = movie
@@ -107,6 +108,7 @@ export default new Vuex.Store({
     async GET_MOVIE_LIST({ state, commit }) {
       const MOVIE_LIST_URL = '/api/v1/movies/'
       const response = await axios.get(`${MOVIE_LIST_URL}?page=${state.page}`)
+      console.log('평가')
       commit('GET_MOVIE_LIST', response.data)
     },
     async GET_LATEST_MOVIE_LIST({ commit }) {
@@ -130,7 +132,17 @@ export default new Vuex.Store({
       console.log(response.data)
       commit('FILTER_MOVIE', response.data)
     },
-
+    async CHECK_MOVIE({commit}, movie_id) {
+      const CHECK_MOVIE_URL = '/api/v1/movies/checklist/'
+      console.log(movie_id)
+      const data = {
+        'username': localStorage.getItem('username'),
+        'movie': movie_id
+      }
+      const response = await axios.post(CHECK_MOVIE_URL, data)
+      console.log(response)
+      commit('CHECK_MOVIE')
+    },
     async CREATE_COMMENT({ commit }, comments){
       const COMMENT_CREATE_URL = '/api/v1/movies/createcomments/'
       const data = comments
