@@ -10,7 +10,8 @@ from django.shortcuts import get_object_or_404
 
 from .serializers import (
     MovieSerializer,
-    CommentSerializer
+    CommentSerializer,
+    WishlistSerializer
 )
 from .models import Movie, Comment
 
@@ -147,5 +148,20 @@ def filter_movie(request, category):
 
 @api_view(['POST'])
 def check_movie(request):
-    print(request.data)
+    username = request.data.get('username')
+    movie_id = request.data.get('movie')
+
+    user = get_object_or_404(get_user_model(), username=username)
+    movie = get_object_or_404(Movie, id=movie_id)
+
+    data = {
+        'user': user,
+        'movie': movie,
+    }
+    
+    serializer = WishlistSerializer(data=data)
+
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=user, movie=movie)
+        return Response(data=serializer.data)
     return Response({'message':'wait'})

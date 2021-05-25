@@ -3,6 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .serializers import UserSerializer
+from .models import Userlike
+
 # Create your views here.
 @api_view(['POST'])
 def signup(request):
@@ -17,5 +19,6 @@ def signup(request):
         user = serializer.save()
         user.set_password(request.data.get('password'))
         user.save()
+        Userlike(user=user).save() # 회원가입과 함께 유저 취향 테이블도 생성
         return Response(data=serializer.data)
 
