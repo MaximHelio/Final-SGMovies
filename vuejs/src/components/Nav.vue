@@ -22,7 +22,7 @@
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
             <li>
-              <router-link to="/profile"><span @click="profilePage">Profile</span></router-link>
+              <router-link to="/profile" class="dropdown-item"><span @click="profilePage">Profile</span></router-link>
             </li>
           </ul>
         </div>

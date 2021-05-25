@@ -20,7 +20,8 @@ export default new Vuex.Store({
     latestMovieItem: [],
     movieItem: [],
     searchedMovieList: [],
-    commentList: [],
+    bestMovieList: [],
+    bestMovieItem: [],
     comments: {},
   },
   getters: {
@@ -36,14 +37,17 @@ export default new Vuex.Store({
     getLatestMovieList(state) {
       return state.latestMovieList
     },
+    getBestMovieList(state) {
+      return state.bestMovieList
+    },
     getUserCreateStatus(state) {
       return state.userCreateStatus
     },
     getSearchMovieList(state) {
       return state.searchedMovieList
     },
-    getMovieCommentList(state) {
-      return state.commentList
+    getMovieComment(state) {
+      return state.comments
     },
   },
   mutations: {
@@ -63,6 +67,9 @@ export default new Vuex.Store({
     GET_LATEST_MOVIE_LIST(state, movieList) {
       state.latestMovieList = movieList
     },
+    GET_BEST_MOVIE_LIST(state, movieList) {
+      state.bestMovieList = movieList
+    },
     LOGOUT(state) {
       state.token = ''
       localStorage.removeItem('token')
@@ -70,6 +77,9 @@ export default new Vuex.Store({
     },
     SET_LATEST_LAYER(state, movie) {
       state.latestMovieItem = movie
+    },
+    SET_BEST_LAYER(state, movie) {
+      state.bestMovieItem = movie
     },
     SEARCH_MOVIE(state, searchedMovieList) {
       state.searchedMovieList = searchedMovieList
@@ -80,10 +90,6 @@ export default new Vuex.Store({
     },
     CREATE_COMMENT(state, comments) {
       state.comments = comments
-    },
-    GET_MOVIE_COMMENT(state, commentList) {
-      state.commentList = commentList
-      console.log(state.commentList)
     },
   },
   actions: {
@@ -110,18 +116,35 @@ export default new Vuex.Store({
     async GET_MOVIE_LIST({ state, commit }) {
       const MOVIE_LIST_URL = '/api/v1/movies/'
       const response = await axios.get(`${MOVIE_LIST_URL}?page=${state.page}`)
-      console.log('평가')
       commit('GET_MOVIE_LIST', response.data)
     },
     async GET_LATEST_MOVIE_LIST({ commit }) {
       const LATEST_MOVIE_LIST_URL = '/api/v1/movies/latest'
       const response = await axios.get(LATEST_MOVIE_LIST_URL)
       let latestMovieList = response.data
-      latestMovieList = latestMovieList.sort(function (a, b) {
+      latestMovieList = latestMovieList.filter(function (a) {
+        return a.release_date.replace(/-/g, '') <= 20210525
+      })
+      // yyyyMMdd 20210101 -> 20210201(현재) - 20210301 => 마이너스 나오니까 필터 제외
+      let newlatestMovieList = []
+      latestMovieList.forEach((element) => {
+        if (!newlatestMovieList.includes(element)) {
+          newlatestMovieList.push(element);
+        }
+      })
+      newlatestMovieList = newlatestMovieList.sort(function (a, b) {
         return b.release_date.replace(/-/g, '') - a.release_date.replace(/-/g, '');
-      }).slice(0, 10)
-      console.log(latestMovieList)
-      commit('GET_LATEST_MOVIE_LIST', latestMovieList)
+      }).slice(0, 15)
+      console.log(newlatestMovieList)
+      commit('GET_LATEST_MOVIE_LIST', newlatestMovieList)
+    },
+    async GET_BEST_MOVIE_LIST({ commit }) {
+      const BEST_MOVIE_LIST_URL = '/api/v1/movies/best'
+      const response = await axios.get(BEST_MOVIE_LIST_URL)
+      let bestMovieList = response.data
+      bestMovieList = bestMovieList.sort().slice(0, 5)
+      console.log(bestMovieList)
+      commit('GET_BEST_MOVIE_LIST', bestMovieList)
     },
     async SEARCH_MOVIE({ commit }, keyword) {
       const SEARCH_MOVIE_URL = `/api/v1/movies/search/${keyword}`
@@ -153,11 +176,6 @@ export default new Vuex.Store({
         'comments': response.data,
       }
       commit('CREATE_COMMENT', commentCreateData)
-    },
-    async GET_MOVIE_COMMENT({ commit }, movie_id) {
-      const GET_COMMENT_URL = `/api/v1/movies/${movie_id}/comments/`
-      const response = await axios.get(GET_COMMENT_URL)
-      commit('GET_MOVIE_COMMENT', response.data)
     },
   },
   modules: {
