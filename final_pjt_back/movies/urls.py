@@ -11,7 +11,7 @@ urlpatterns = [
 
     # 전체 댓글 목록 가져오기
     # GET http://localhost:8000/api/v1/movies/comments/
-    path('comments/', views.comment_list),
+    path('<int:movie_id>/comments/', views.comment_list),
 
     # 댓글 생성하기
     # POST http://localhost:8000/api/v1/movies/createcomments/

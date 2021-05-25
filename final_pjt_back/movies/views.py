@@ -92,7 +92,7 @@ def create_comment(request):
         'rank': rank,
         'username': username,
     }
-
+    print(data)
     serializer = CommentSerializer(data=data)
     if serializer.is_valid(raise_exception=True):
         # 댓글 정보 영화에 저장

@@ -17,7 +17,7 @@
               <input type="radio" id="star1" name="rating" value="1" v-model="comments.rank"/><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
               <input type="radio" id="starhalf" name="rating" value="0.5" v-model="comments.rank"/><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
             </fieldset>
-            <input v-model="comments.comment" type="text" class="mt-3 w-50 h-25" @keyup.enter="onSubmit" ref="commentInput">
+            <input v-model="comments.comment" type="text" class="mt-3 w-50 h-25 bg-light" @keyup.enter="onSubmit" ref="commentInput">
             <div class="d-flex mt-4">
               <button class="btn btn-light me-4" @click="onSubmit">작성 완료</button>
               <button class="btn btn-light ms-4" @click="$emit('close')">닫기</button>
