@@ -12,14 +12,15 @@ urlpatterns = [
 
 
     # 전체 댓글 목록 가져오기
-    # GET, POST http://localhost:8000/api/v1/comments/
+    # GET http://localhost:8000/api/v1/movies/comments/
     path('comments/', views.comment_list),
 
     # 댓글 생성하기
+    # POST http://localhost:8000/api/v1/movies/createcomments/
     path('createcomments/', views.create_comment),
 
     # 댓글 수정하기
-    # GET, POST http://localhost:8000/api/v1/comments/
+    # GET, POST http://localhost:8000/api/v1/movies/comments/<int:comment_id>/
     path('comments/<int:comment_id>/', views.comment_detail),
 
     # GET, POST http://localhost:8000/api/v1/latest/
