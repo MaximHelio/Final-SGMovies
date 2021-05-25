@@ -1,10 +1,25 @@
 <template>
-  <div class="profile container">
-    <div class="profile-header">{{ profileUser.username }}'s Page</div>
+  <div class="p-3 profile container">
+    <b-card class="mb-3" bg-variant="dark" text-variant="white">
+      <b-card-text>
+        With supporting text below as a natural lead-in to additional content.
+      </b-card-text>
+      <div>
+        <b-button href="#" variant="primary">Go somewhere</b-button>
+      </div>
+    </b-card>
+    <b-card img-src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairDreads&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Heather&eyeType=Side&eyebrowType=UpDownNatural&mouthType=Disbelief&skinColor=Brown' img-left class="mb-3">
+      <b-card-text>
+        <div class="profile-header">{{ getUser }}님,</div>
+        <hr>
+        안녕하세요
+      </b-card-text>
+    </b-card>
+    <div class="d-flex justify-content">
     <div class="profile-body">
       <div class="profile-body-articles">
         <h1 class="profile-body-articles-label">
-          {{ profileUser.username }}가 작성한 리뷰
+          {{ getUser }}가 작성한 리뷰
         </h1>
         <div v-if="profileUser.comment" class="profile-body-articles-items">
           <router-link
@@ -17,12 +32,12 @@
           </router-link>
         </div>
         <div v-else class="profile-body-articles-items">
-          <h1>아직 작성한 리뷰가 없습니다</h1>
+          <h3>아직 작성한 리뷰가 없습니다</h3>
         </div>
       </div>
       <div class="profile-body-like-articles">
         <h1 class="profile-body-like-articles-label">
-          {{ profileUser.username }}가 좋아하는 리뷰
+          {{ getUser }}가 좋아하는 영화
         </h1>
         <div v-if="profileUser.like_articles" class="profile-body-like-articles-items">
           <router-link
@@ -35,8 +50,45 @@
           </router-link>
         </div>
         <div v-else class="profile-body-like-articles-items">
-          <h1>아직 좋아하는 리뷰가 없습니다</h1>
-        </div>
+          <h3>아직 좋아하는 영화가 없습니다</h3>
+        </div> 
+      </div>
+    </div>
+    <hr>
+    </div>
+    
+    <div class="p-5">
+      <h1>{{ getUser }}님, 이런 영화는 어때요?</h1>
+      <div>
+        <b-card-group deck class="d-flex">
+          <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+            <b-card-text>
+              This is a wider card with supporting text below as a natural lead-in to additional content.
+              This content is a little bit longer.
+            </b-card-text>
+            <template #footer>
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </template>
+          </b-card>
+          <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+            <b-card-text>
+              This is a wider card with supporting text below as a natural lead-in to additional content.
+              This content is a little bit longer.
+            </b-card-text>
+            <template #footer>
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </template>
+          </b-card>
+          <b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+            <b-card-text>
+              This is a wider card with supporting text below as a natural lead-in to additional content.
+              This content is a little bit longer.
+            </b-card-text>
+            <template #footer>
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </template>
+          </b-card>
+        </b-card-group>
       </div>
     </div>
   </div>
@@ -44,8 +96,18 @@
 
 <script>
 import axios from 'axios'
+// const SERVER_URL = ''
+import Vue from 'vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-const SERVER_URL = 'https://finprojectapi.herokuapp.com'
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 
 export default {
   name: 'Profile',
@@ -59,9 +121,15 @@ export default {
     currentUser: Object,
     id: [Number, String],
   },
+  computed: {
+    getUser() {
+      return localStorage.getItem("username")
+    },
+  },
   methods: {
     getProfileUser() {
-      axios.get(SERVER_URL + `/api/v1/accounts/${this.id}`)
+      axios.get( `/api/v1/accounts/${this.id}`)
+
         .then(res => {
           this.profileUser = res.data
         })

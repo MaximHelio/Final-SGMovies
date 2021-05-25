@@ -2,8 +2,11 @@
   <div id="app">
     <div v-if="isAuthenticated">
       <Nav />
+      <Profile @profile-page="profilePage"/>
       <router-view />
-      <MovieView />
+      <div>
+        <MovieView v-if="page==='home'"/>
+      </div>
     </div>
     <div v-else>
      <LoginSignupView />
@@ -13,14 +16,22 @@
 <script>
 import LoginSignupView from '@/views/LoginSignupView'
 import MovieView from '@/views/MovieView'
+import Profile from '@/views/Profile'
 import Nav from '@/components/Nav'
+
 
 export default {
   name: 'App',
   components: {
     LoginSignupView,
     MovieView,
+    Profile,
     Nav,
+  },
+  data () {
+    return {
+      page: ""
+    }
   },
   computed: {
     isAuthenticated() {
@@ -34,9 +45,12 @@ export default {
     logout () {
       this.$store.commit('LOGOUT')
     },
-    profile () {
-      this.$store.commit('PROFILE')
-    }
+    // profile () {
+    //   this.$store.commit('PROFILE')
+    // },
+    profilePage() {
+      this.page="profile"
+    },
   },
 }
 </script>
