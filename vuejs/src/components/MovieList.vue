@@ -2,14 +2,14 @@
   <div>
     <nav class="d-flex mt-5 align-items-center justify-content-between movie-list-nav">
       <div class="me-5 d-flex align-items-center">
-        <span class="fs-3 fw-bold">기타 영화</span>
+        <span class="fs-3 fw-bold content-font">모든 영화</span>
         <div class="filter ms-5">
-          <span :class="{ pick: state == 1 }" @click=all>전체</span>
-          <span :class="{ pick: state == 2 }" @click=action>액션</span>
-          <span :class="{ pick: state == 3 }" @click=comedy>코미디</span>
-          <span :class="{ pick: state == 4 }" @click=horror>공포</span>
-          <span :class="{ pick: state == 5 }" @click=animation>애니메이션</span>
-          <span :class="{ pick: state == 6 }" @click=sf>SF</span>
+          <span class="content-font" :class="{ pick: state == 1 }" @click=all>전체</span>
+          <span class="content-font" :class="{ pick: state == 2 }" @click=action>액션</span>
+          <span class="content-font" :class="{ pick: state == 3 }" @click=comedy>코미디</span>
+          <span class="content-font" :class="{ pick: state == 4 }" @click=horror>공포</span>
+          <span class="content-font" :class="{ pick: state == 5 }" @click=animation>애니메이션</span>
+          <span class="content-font" :class="{ pick: state == 6 }" @click=sf>SF</span>
         </div>
       </div>
       <div class="" style="right:0;">

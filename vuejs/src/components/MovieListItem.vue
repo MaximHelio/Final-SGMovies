@@ -3,7 +3,7 @@
     <div class="col my-4" id="">
       <div class="movie" @click="isModalViewed=true">
         <img class="w-75 border" :src="movie.poster" alt="">
-        <span class="mt-3">{{ movie.title }}</span>
+        <span class="mt-3 title-font">{{ movie.title }}</span>
       </div>
     </div>
     <ModalView 
