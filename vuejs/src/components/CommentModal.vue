@@ -56,6 +56,7 @@ export default {
       this.comments.userId = localStorage.getItem('username')
 
       this.$store.dispatch('CREATE_COMMENT', this.comments)
+      this.$store.dispatch('GET_MOVIE_COMMENT', this.movie.id)
       this.comments.comment = '' // input 태그 초기화
       this.$refs.commentInput.value
     },

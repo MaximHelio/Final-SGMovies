@@ -28,23 +28,8 @@
                   <img :src="movie.poster" alt="" class="poster">
                 </div>
               </div>
-              <div v-if="category === 'comment' " class="modal-body comment-page d-flex justify-content-between align-items-center">
-                <div class="w-75 text-center">
-                  <p>평점: {{ movie.vote_average }}</p>
-                  <p>개봉일: {{ movie.release_date }}</p>
-                  <p>런타임: {{ movie.runtime }}</p>
-                  <p>댓글 수: ???</p>
-                </div>
-                <div class="row row-cols-2">
-                  <div
-                    class="col" 
-                    v-for="comment in getCommentList"
-                    :key="comment.id"
-                  >
-                    <h1>{{ comment.username }}</h1>
-                    <p>{{ comment.content }}</p>
-                  </div>
-                </div>
+              <div v-if="category === 'comment' " class="modal-body comment-page">
+                <Comment :movie="movie"/>
               </div>
               <div v-if="category === 'trail' " class="modal-body d-flex justify-content-between">
                 <ModalTrail/>
@@ -59,12 +44,14 @@
 <script>
 import CommentModal from '@/components/CommentModal'
 import ModalTrail from '@/components/ModalTrail'
+import Comment from '@/components/Comment'
 
 export default {
   name: 'ModalView',
   components: {
     CommentModal,
     ModalTrail,
+    Comment,
   },
   props: {
     movie: {
@@ -81,7 +68,7 @@ export default {
   computed: {
     getCommentList() {
       return this.$store.getters.getMovieCommentList
-    }
+    },
   },
   methods: {
     movieInfo() {
@@ -186,7 +173,7 @@ export default {
 }
 
 .comment-page {
-  top: 18%;
+  top: 15%;
 }
 
 

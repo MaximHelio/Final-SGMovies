@@ -22,8 +22,12 @@ export default new Vuex.Store({
     searchedMovieList: [],
     commentList: [],
     comments: {},
+    nowPage: 'home',
   },
   getters: {
+    getPage(state) {
+      return state.nowPage
+    },
     isAuthenticated(state) {
       return state.token ? true : false
     },
@@ -47,6 +51,15 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    HOME(state) {
+      state.nowPage = 'home'
+    },
+    EVAL(state) {
+      state.nowPage = 'eval'
+    },
+    PROFILE(state) {
+      state.nowPage = 'profile'
+    },
     CREATE_USER(state, userCreateData) {
       state.userInfo = userCreateData.userInfo
       state.userCreateStatus = userCreateData.status
@@ -54,6 +67,7 @@ export default new Vuex.Store({
     AUTH_USER(state, payload) {
       state.token = payload.token
       state.username = payload.username
+      state.nowPage = 'home'
       localStorage.setItem('username', state.username)
     },
     GET_MOVIE_LIST(state, movieList) {
@@ -110,7 +124,6 @@ export default new Vuex.Store({
     async GET_MOVIE_LIST({ state, commit }) {
       const MOVIE_LIST_URL = '/api/v1/movies/'
       const response = await axios.get(`${MOVIE_LIST_URL}?page=${state.page}`)
-      console.log('평가')
       commit('GET_MOVIE_LIST', response.data)
     },
     async GET_LATEST_MOVIE_LIST({ commit }) {

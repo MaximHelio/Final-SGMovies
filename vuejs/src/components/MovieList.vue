@@ -93,7 +93,6 @@ export default {
       this.$store.dispatch('FILTER_MOVIE','SF')
     },
     checkBottom() {
-      console.log('scroll!!!')
       const {scrollTop, clientHeight, scrollHeight} = document.documentElement
       if (scrollHeight - scrollTop === clientHeight) {
         this.$store.dispatch('GET_MOVIE_LIST')
@@ -104,7 +103,6 @@ export default {
     },
     onSearchInput() {
       _.throttle(this.$store.dispatch('SEARCH_MOVIE', this.keyword),150)
-      console.log(this.searchMovieList)
     }
   },
   created() {

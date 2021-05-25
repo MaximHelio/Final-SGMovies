@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     checkBottom() {
-        console.log('scroll!!!')
         const {scrollTop, clientHeight, scrollHeight} = document.documentElement
         if (scrollHeight - scrollTop === clientHeight) {
           this.$store.dispatch('GET_MOVIE_LIST')
