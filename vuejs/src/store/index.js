@@ -23,6 +23,7 @@ export default new Vuex.Store({
     bestMovieList: [],
     bestMovieItem: [],
     comments: {},
+    commentList: [],
     nowPage: 'home',
   },
   getters: {
@@ -52,6 +53,9 @@ export default new Vuex.Store({
     },
     getMovieComment(state) {
       return state.comments
+    },
+    getMovieCommentList(state) {
+      return state.commentList
     },
   },
   mutations: {
@@ -104,6 +108,10 @@ export default new Vuex.Store({
     },
     CREATE_COMMENT(state, comments) {
       state.comments = comments
+    },
+    GET_MOVIE_COMMENT(state, commentList) {
+      state.commentList = commentList
+      console.log(state.commentList)
     },
   },
   actions: {
