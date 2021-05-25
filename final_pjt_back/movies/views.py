@@ -75,11 +75,22 @@ def comment_list(request):
 # 댓글 만들기
 @api_view(['POST'])
 def create_comment(request):
-    movie_id = request.POST.get('movie')
-    user_id = request.POST.get('user')
+    movie_id = request.data.get('movieId')
+    user_id = request.data.get('username')
+    # content = request.data.get('comment')
+    # rank = float(request.data.get('rank'))
+    print(request.data)
+    
+    movie = get_object_or_404(Movie, id=movie_id)
+    user = get_object_or_404(get_user_model(), pk=request.user.pk)
 
-    movie = get_object_or_404(Movie, pk=movie_id)
-    user = get_object_or_404(get_user_model(), pk=user_id)
+    # data = {
+    #     'movie': movie,
+    #     'user': user,
+    #     'content': content,
+    #     'rank': rank,
+    # }
+
 
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):

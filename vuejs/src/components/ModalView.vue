@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div v-if="category === 'trail' " class="modal-body d-flex justify-content-between">
-                trailer
+                <ModalTrail/>
               </div>
             </div>
           </div>
@@ -74,11 +74,13 @@
 
 <script>
 import CommentModal from '@/components/CommentModal'
+import ModalTrail from '@/components/ModalTrail'
 
 export default {
   name: 'ModalView',
   components: {
     CommentModal,
+    ModalTrail,
   },
   props: {
     movie: {

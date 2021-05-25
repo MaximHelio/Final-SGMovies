@@ -19,7 +19,6 @@
 <script>
 import LoginSignupView from '@/views/LoginSignupView'
 import MovieView from '@/views/MovieView'
-import Profile from '@/views/Profile'
 import Nav from '@/components/Nav'
 
 
@@ -28,7 +27,6 @@ export default {
   components: {
     LoginSignupView,
     MovieView,
-    Profile,
     Nav,
   },
   data () {
@@ -56,7 +54,7 @@ export default {
     },
     homePage() {
       this.page = 'home'
-    }
+    },
     profilePage() {
       this.page="profile"
     },
@@ -67,7 +65,7 @@ export default {
 <style>
 body {
   height: 100%;
-  background-color: black;
+  background-color: black !important;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
