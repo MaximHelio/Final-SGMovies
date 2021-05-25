@@ -68,14 +68,14 @@
       width: 250px;
       height: 300px;
       text-align: center;
-      background-color: #2C8DFB;
+      background-color: #0000;
       background-position: center;
       background-size: cover;
       
     }
     .swiper-pagination {
       ::v-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
-        background-color: #fefefe;
+        
       }
     }
   }

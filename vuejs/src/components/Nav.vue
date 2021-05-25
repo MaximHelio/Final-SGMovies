@@ -3,7 +3,7 @@
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <div>
-          <router-link to="/">
+          <router-link to="/home">
             <img src="../assets/logo.png" alt="" class="logo">
           </router-link>
           <router-link class="ms-5" to="/movie-evaluation">영화 평가하기</router-link>
@@ -16,7 +16,7 @@
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
             <li>
-              <router-link to="/profile">Profile</router-link>
+              <router-link to="/profile"><span @click="profilePage">Profile</span></router-link>
             </li>
           </ul>
         </div>
@@ -28,9 +28,17 @@
 <script>
 export default {
   name: 'Nav',
+  computed: {
+    getUser() {
+      return localStorage.getItem("username")
+    },
+  },
   methods: {
     logout() {
       this.$store.commit('LOGOUT')
+    },
+    profilePage() {
+      this.$emit('profile-page')
     }
   }
 }

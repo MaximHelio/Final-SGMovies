@@ -49,6 +49,7 @@ export default new Vuex.Store({
     AUTH_USER(state, payload) {
       state.token = payload.token
       state.username = payload.username
+      localStorage.setItem("username", state.username)
     },
     GET_MOVIE_LIST(state, movieList) {
       state.movieList.push(...movieList)
