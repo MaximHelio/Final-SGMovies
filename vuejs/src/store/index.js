@@ -191,6 +191,11 @@ export default new Vuex.Store({
       }
       commit('CREATE_COMMENT', commentCreateData)
     },
+    async GET_MOVIE_COMMENT({ commit }, movie_id) {
+      const GET_COMMENT_URL = `/api/v1/movies/${movie_id}/comments/`
+      const response = await axios.get(GET_COMMENT_URL)
+      commit('GET_MOVIE_COMMENT', response.data)
+    },
   },
   modules: {
   }
