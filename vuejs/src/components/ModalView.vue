@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div v-if="category === 'trail' " class="modal-body d-flex justify-content-between">
-                <ModalTrail/>
+                <ModalTrail :video="video"/>
               </div>
             </div>
           </div>
@@ -92,6 +92,9 @@ export default {
     return {
       category: 'info',
       showModal: false,
+      
+      videoList: [],
+      video: null,
     }
   },
   methods: {
@@ -103,6 +106,7 @@ export default {
     },
     movieTrail() {
       this.category = 'trail'
+      // this.video = video
     },
   }
 }
