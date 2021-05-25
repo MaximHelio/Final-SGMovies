@@ -1,9 +1,14 @@
 <template>
   <div id="app">
     <div v-if="isAuthenticated">
-      <Nav />
-      <router-view />
-      <MovieView />
+      <Nav
+        @change-page="evalPage"
+        @home-page='homePage'
+      />
+      <router-view/>
+      <div v-if="page === 'home'">
+        <MovieView />
+      </div>
     </div>
     <div v-else>
      <LoginSignupView />
@@ -22,6 +27,11 @@ export default {
     MovieView,
     Nav,
   },
+  data() {
+    return {
+      page: '',
+    }
+  },
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated
@@ -36,6 +46,12 @@ export default {
     },
     profile () {
       this.$store.commit('PROFILE')
+    },
+    evalPage() {
+      this.page = 'eval'
+    },
+    homePage() {
+      this.page = 'home'
     }
   },
 }

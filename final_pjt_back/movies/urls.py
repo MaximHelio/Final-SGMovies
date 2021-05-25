@@ -28,6 +28,10 @@ urlpatterns = [
     # 영화 검색
     path('search/<str:keyword>/', views.search_movie),
 
+    # 영화 체크리스트 (평가기능에서 체크한 영화들)
+    path('checklist/', views.check_movie),
+    
     # 영화 필터링
     path('<str:category>/', views.filter_movie),
+
 ]

@@ -136,10 +136,16 @@ def search_movie(request, keyword):
     return Response(data=serializer.data)
 
 
-@api_view((['GET']))
+@api_view(['GET'])
 def filter_movie(request, category):
     movies = Movie.objects.filter(genres__contains=category)
 
     serializer = MovieSerializer(movies, many=True)
 
     return Response(data=serializer.data)
+
+
+@api_view(['POST'])
+def check_movie(request):
+    print(request.data)
+    return Response({'message':'wait'})

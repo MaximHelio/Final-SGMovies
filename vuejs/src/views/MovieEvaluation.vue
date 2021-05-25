@@ -1,15 +1,20 @@
 <template>
   <div>
     <div>
-      <p>영화 평가 페이지</p>
-      <input type="text">
+      <p class="text-light">영화 평가 페이지</p>
+      <EvalMovieList />
     </div>
   </div>
 </template>
 
 <script>
+import EvalMovieList from '@/components/EvalMovieList'
+
 export default {
-  name: 'MovieEvaluation'
+  name: 'MovieEvaluation',
+  components: {
+    EvalMovieList,
+  },
 }
 </script>
 
