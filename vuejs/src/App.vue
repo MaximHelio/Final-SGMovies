@@ -20,8 +20,6 @@
 import LoginSignupView from '@/views/LoginSignupView'
 import MovieView from '@/views/MovieView'
 import Nav from '@/components/Nav'
-
-
 export default {
   name: 'App',
   components: {
@@ -74,25 +72,20 @@ body {
   text-align: center;
   color: #2c3e50; 
 }
-
 p {
   margin: 0;
 }
-
 .navbar {
   background-color: black !important;
 }
-
 .logo {
   width: 100px;
   height: 30px;
 }
-
 .user-info {
   margin-right: 40px;
   cursor: pointer;
 }
-
 .user-info img {
   width: 30px;
   height: 30px;
@@ -104,31 +97,25 @@ p {
   background-position: center;
   background-repeat: no-repeat;
 }
-
 .user-info > p{
   display: inline;
   color: white;
   margin-right: 20px;
 }
-
 a{
   text-decoration: none;
   color: white;
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
 nav.navbar {
   list-style: none;
 }

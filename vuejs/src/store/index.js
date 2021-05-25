@@ -23,8 +23,12 @@ export default new Vuex.Store({
     bestMovieList: [],
     bestMovieItem: [],
     comments: {},
+    nowPage: 'home',
   },
   getters: {
+    getPage(state) {
+      return state.nowPage
+    },
     isAuthenticated(state) {
       return state.token ? true : false
     },
@@ -51,6 +55,15 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    HOME(state) {
+      state.nowPage = 'home'
+    },
+    EVAL(state) {
+      state.nowPage = 'eval'
+    },
+    PROFILE(state) {
+      state.nowPage = 'profile'
+    },
     CREATE_USER(state, userCreateData) {
       state.userInfo = userCreateData.userInfo
       state.userCreateStatus = userCreateData.status
@@ -58,6 +71,7 @@ export default new Vuex.Store({
     AUTH_USER(state, payload) {
       state.token = payload.token
       state.username = payload.username
+      state.nowPage = 'home'
       localStorage.setItem('username', state.username)
     },
     GET_MOVIE_LIST(state, movieList) {
