@@ -19,13 +19,13 @@
               </div>
               <!-- body -->
               <div v-if="category === 'info' " class="modal-body d-flex justify-content-between">
-                <div class="mt-5">
-                  <h1>{{ movie.title }}</h1>
-                  <p>{{ movie.vote_average }}/10</p>
-                  <p>{{ movie.overview }}</p>
+                <div class="mt-5 px-3">
+                  <h1 class="title-font pb-2">{{ movie.title }}</h1>
+                  <p class="content-font">{{ movie.vote_average }}/10</p>
+                  <p class="content-font">{{ movie.overview }}</p>
                 </div>
                 <div>
-                  <img :src="movie.poster" alt="" class="poster">
+                  <img :src="movie.poster" alt="" class="poster p-3">
                 </div>
               </div>
               <div v-if="category === 'comment' " class="modal-body comment-page">
@@ -159,8 +159,8 @@ export default {
 .poster {
   float: right;
   top: 0;
-  width: 450px;
-  height: 70vh;
+  width: 300px;
+  height: 65vh;
 }
 
 .cancel-button {
@@ -181,5 +181,13 @@ export default {
   top: 15%;
 }
 
+.content-font {
+  font-family: 'Nanum Myeongjo', serif;
+}
+
+.title-font{
+  font-family: 'Nanum Myeongjo', serif;
+  font-family: 'Poor Story', cursive; 
+}
 
 </style>
