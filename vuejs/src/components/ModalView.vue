@@ -46,7 +46,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="category === 'trail' " class="modal-body d-flex justify-content-between">
+              <div v-if="category === 'trail' " class="modal-body d-flex justify-content-between h-100">
                 <ModalTrail :movie="movie"/>
               </div>
             </div>

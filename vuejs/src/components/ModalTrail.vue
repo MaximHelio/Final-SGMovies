@@ -1,13 +1,10 @@
 <template>
-  <div class="container my-4">
-    <div class="container">
-      <h2>예고편</h2>
-
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="video-container embed-responsive embed-responsive-16by9 w-100" v-if="videoList.length">
-          <iframe class="embed-responsive-item" :src="videoUrl" allowfullscreen frameborder="0"/>
-        </div>
+  <div class="container mb-4">
+    <div class="container h-100">
+      <div class="h-100 video-container embed-responsive embed-responsive-16by9" v-if="videoList.length">
+        <iframe width="100%" height="100%" class="embed-responsive-item" :src="videoUrl" allowfullscreen frameborder="0"/>
       </div>
+
     </div>
   </div>
 </template>
