@@ -4,6 +4,7 @@
       <Nav
         @change-page="evalPage"
         @home-page='homePage'
+        @profile-page="profilePage"
       />
       <router-view/>
       <div v-if="page === 'home'">
@@ -18,18 +19,21 @@
 <script>
 import LoginSignupView from '@/views/LoginSignupView'
 import MovieView from '@/views/MovieView'
+import Profile from '@/views/Profile'
 import Nav from '@/components/Nav'
+
 
 export default {
   name: 'App',
   components: {
     LoginSignupView,
     MovieView,
+    Profile,
     Nav,
   },
-  data() {
+  data () {
     return {
-      page: '',
+      page: ""
     }
   },
   computed: {
@@ -53,6 +57,9 @@ export default {
     homePage() {
       this.page = 'home'
     }
+    profilePage() {
+      this.page="profile"
+    },
   },
 }
 </script>

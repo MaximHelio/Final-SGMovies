@@ -3,6 +3,7 @@
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <div>
+
           <router-link to="/">
             <img @click="homePage" src="../assets/logo.png" alt="" class="logo">
           </router-link>
@@ -21,7 +22,7 @@
           <ul class="dropdown-menu" aria-labelledby="drop">
             <li><a href="" class="dropdown-item" @click.prevent="logout">Logout</a></li>
             <li>
-              <router-link to="/profile">Profile</router-link>
+              <router-link to="/profile"><span @click="profilePage">Profile</span></router-link>
             </li>
           </ul>
         </div>
@@ -33,6 +34,7 @@
 <script>
 export default {
   name: 'Nav',
+
   data() {
     return {
     }
@@ -52,6 +54,9 @@ export default {
     homePage() {
       this.$emit('home-page')
     },
+    profilePage() {
+      this.$emit('profile-page')
+    }
   }
 }
 </script>
