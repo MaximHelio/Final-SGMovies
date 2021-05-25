@@ -51,7 +51,7 @@ export default {
   methods: {
     onSubmit() {
       if (!this.comments.comment.length) return 
-      console.log(this.movie)
+      
       this.comments.movieId = this.movie.id
       this.comments.userId = localStorage.getItem('username')
 

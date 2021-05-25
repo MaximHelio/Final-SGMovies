@@ -13,7 +13,7 @@
                 </div>
                 <div class="me-5">
                   <i v-if="category === 'comment'" class="fas fa-edit fa-2x write-button" @click="showModal = true"></i>
-                  <CommentModal v-if="showModal" @close="showModal = false"/>
+                  <CommentModal v-if="showModal" @close="showModal = false" :movie="movie"/>
                   <i class="fas fa-times fa-2x cancel-button" @click="$emit('close')" style="color:white;"></i>
                 </div>
               </div>
@@ -36,29 +36,13 @@
                   <p>댓글 수: ???</p>
                 </div>
                 <div class="row row-cols-2">
-                  <div class="col">
-                    <h1>Username</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
-                  </div>
-                  <div class="col">
-                    <h1>Username</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
-                  </div>
-                  <div class="col">
-                    <h1>Username</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
-                  </div>
-                  <div class="col">
-                    <h1>Username</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
-                  </div>
-                  <div class="col">
-                    <h1>Username</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
-                  </div>
-                  <div class="col">
-                    <h1>Username</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates explicabo rerum voluptate qui? Cum deleniti consequuntur dignissimos maiores voluptate odio explicabo aspernatur! Quos, rerum! Ipsum soluta excepturi quidem autem quod.</p>
+                  <div
+                    class="col" 
+                    v-for="comment in getCommentList"
+                    :key="comment.id"
+                  >
+                    <h1>{{ comment.username }}</h1>
+                    <p>{{ comment.content }}</p>
                   </div>
                 </div>
               </div>
@@ -94,17 +78,25 @@ export default {
       showModal: false,
     }
   },
+  computed: {
+    getCommentList() {
+      return this.$store.getters.getMovieCommentList
+    }
+  },
   methods: {
     movieInfo() {
       this.category = 'info'
     },
     movieComment() {
       this.category = 'comment'
+      this.$store.dispatch('GET_MOVIE_COMMENT', this.movie.id)
     },
     movieTrail() {
       this.category = 'trail'
     },
-  }
+  },
+  created() {
+  },
 }
 </script>
 
