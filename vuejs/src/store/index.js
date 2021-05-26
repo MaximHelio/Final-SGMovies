@@ -226,6 +226,7 @@ export default new Vuex.Store({
       const response = await axios.post(GET_COMMENT_URL, data)
       let userCommentList = [];
       for (let i=0; i<response.data.length; i++) {
+
         let isSkiped = false
         for (let j=0; j<userCommentList.length; j++) {
           if (userCommentList[j].movie.id == response.data[i].movie.id) {
