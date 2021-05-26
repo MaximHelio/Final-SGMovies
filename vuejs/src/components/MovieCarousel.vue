@@ -69,10 +69,6 @@
 </script>
 
 <style lang="scss" scoped>
-  .thumb-example {
-    height: 480px;
-  }
-
   .swiper {
     .swiper-slide {
       background-size: cover;
@@ -100,7 +96,7 @@
       width: 100%;
     }
     &.gallery-thumbs {
-      height: 30%;
+      height: 250px;
       box-sizing: border-box;
     }
     &.gallery-thumbs .swiper-slide {

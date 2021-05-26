@@ -21,7 +21,7 @@
       <WishList />
       <p class="profile-sub-title">댓글 쓴 영화</p>
       <div class="row row-cols-4" v-if="keyword.length === 0">
-        <MovieListItem
+        <ProfileMovieListItem
           v-for="item in userCommentList"
           :key="item.movie.pk"
           :movie="item.movie"
@@ -30,7 +30,7 @@
         />
       </div>
       <div class="row row-cols-4" v-else>
-        <MovieListItem
+        <ProfileMovieListItem
           v-for="item in userCommentList"
           :key="item.movie.pk"
           :movie="item.movie"
@@ -95,7 +95,7 @@ p.profile-sub-title {
 
 <script>
 // const SERVER_URL = 'http://localhost:8000'
-import MovieListItem from '@/components/MovieListItem'
+import ProfileMovieListItem from '@/components/ProfileMovieListItem'
 import _ from 'lodash'
 import Vue from 'vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -112,7 +112,7 @@ Vue.use(IconsPlugin)
 export default {
   name: 'Profile',
   components: {
-    MovieListItem,
+    ProfileMovieListItem,
   },
   data() {
     return {
