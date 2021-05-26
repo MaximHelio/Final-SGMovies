@@ -26,6 +26,7 @@ export default new Vuex.Store({
     commentList: [],
     nowPage: 'home',
     userCommentList: [],
+    userWishList: [],
   },
   getters: {
     getPage(state) {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     },
     getUserCommentList(state) {
       return state.userCommentList
+    },
+    getUserWishList(state) {
+      return state.userWishList
     },
   },
   mutations: {
@@ -119,7 +123,11 @@ export default new Vuex.Store({
     },
     GET_USER_COMMENT(state, commentList) {
       state.userCommentList = commentList
-      console.log(state.userCommentList)
+      console.log(state.List)
+    },
+    GET_USER_WISH(state, wishList) {
+      state.userWishList = wishList
+      console.log(state.userWishList)
     },
   },
   actions: {
@@ -216,7 +224,28 @@ export default new Vuex.Store({
       const GET_COMMENT_URL = `/api/v1/movies/user/comment/`
       const data = params
       const response = await axios.post(GET_COMMENT_URL, data)
-      commit('GET_USER_COMMENT', response.data)
+      let userCommentList = [];
+      for (let i=0; i<response.data.length; i++) {
+        let isSkiped = false
+        for (let j=0; j<userCommentList.length; j++) {
+          if (userCommentList[j].movie.id == response.data[i].movie.id) {
+            isSkiped = true
+            break
+          }
+        }
+        if (response.data[i].username != localStorage.getItem("username")) {
+          isSkiped = true
+        }
+        if (isSkiped) continue
+        else userCommentList.push(response.data[i])
+      }
+      commit('GET_USER_COMMENT', userCommentList)
+    },
+    async GET_WISH_LIST({ commit }, params) {
+      const LIKE_MOVIE_LIST_URL = '/api/v1/movies/like'
+      const data = params
+      const response = await axios.post(LIKE_MOVIE_LIST_URL, data)
+      commit('GET_LIKE_MOVIE_LIST', response.data)
     },
   },
   modules: {

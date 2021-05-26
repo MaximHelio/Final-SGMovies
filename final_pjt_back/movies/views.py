@@ -11,7 +11,8 @@ from django.shortcuts import get_object_or_404
 from .serializers import (
     MovieSerializer,
     CommentSerializer,
-    WishlistSerializer
+    WishlistSerializer,
+    CommentMovieSerializer
 )
 from .models import Movie, Comment
 
@@ -189,6 +190,6 @@ def check_movie(request):
 def get_user_comment_list(request):
     username = request.data.get('username')
     comment_list = Comment.objects.select_related('movie').all()
-    serializer = CommentSerializer(comment_list, many=True)
+    serializer = CommentMovieSerializer(comment_list, many=True)
 
     return Response(data=serializer.data)
