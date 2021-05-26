@@ -3,19 +3,44 @@
     <!-- swiper1 -->
     <swiper class="swiper gallery-top" :options="swiperOptionTop" ref="swiperTop">
       <swiper-slide>
-        <a href="#">
-          <img src="https://caching2.lottecinema.co.kr/lotte_image/2021/Spiral/0520/Spiral_1920774.jpg" data-video="https://caching2.lottecinema.co.kr/lotte_image/2021/Spiral/0511/Spiral_1280720.mp4" alt="국내 박스오피스 1위 스파이럴 절찬상영중청소년관람불가">
-        </a>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Ella/Ella_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Line/0525/Line_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Conjuring/0518/Conjuring_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/InTheHeights/InTheHeights_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Truck/0520/Truck_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Voyagers/0524/Voyagers_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Place/Place_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Spiral/0520/Spiral_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/TheFast/0525/TheFast_1920774.jpg">
+      </swiper-slide>
+      <swiper-slide>
+        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Killer/0520/Killer_1920774.jpg">
       </swiper-slide>
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
     </swiper>
     <!-- swiper2 Thumbs 밑에 있는  -->
-    <swiper class="swiper gallery-thumbs" :options="swiperOptionThumbs" ref="swiperThumbs">
+    <!-- <swiper class="swiper gallery-thumbs" :options="swiperOptionThumbs" ref="swiperThumbs">
       <swiper-slide v-for="movie in GetBestMovieList" :key="movie.pk">
         <img class="gallery-thumbs-image" :src="movie.poster">
       </swiper-slide>
-    </swiper>
+    </swiper> -->
   </div>
 </template>
 
@@ -120,4 +145,13 @@
     height: 100%;
     object-fit: contain;
   }
+
+  .main-header-style{
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .angled-gradient { 
+    background: linear-gradient(70deg, blue, pink); 
+    }
 </style>
