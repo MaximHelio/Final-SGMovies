@@ -39,4 +39,9 @@ urlpatterns = [
     # POST http://localhost:8000/api/v1/movies/user/comment
     path('user/comment/', views.get_user_comment_list),
 
+    # 좋아한 영화 리스트
+    path('like/<str:username>/', views.get_like_movie_list),
+
+    # 추천 영화 리스트
+    path('recommend/<str:username>/', views.recommend_movie),
 ]

@@ -29,7 +29,6 @@
         v-for="movie in movieList"
         :key="movie.pk"
         :movie="movie"
-        :genre="movie.genres"
       />
     </div>
     <div class="row row-cols-4" v-else>
@@ -37,7 +36,6 @@
         v-for="movie in searchMovieList"
         :key="movie.pk"
         :movie="movie"
-        :genre="movie.genres"
       />
     </div>
   </div>

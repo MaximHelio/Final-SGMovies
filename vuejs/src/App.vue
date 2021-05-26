@@ -16,10 +16,12 @@
     </div>
   </div>
 </template>
+
 <script>
 import LoginSignupView from '@/views/LoginSignupView'
 import MovieView from '@/views/MovieView'
 import Nav from '@/components/Nav'
+
 export default {
   name: 'App',
   components: {
@@ -42,6 +44,7 @@ export default {
       return this.$store.getters.getPage
     }
   },
+
   methods: {
     logout () {
       this.$store.commit('LOGOUT')
