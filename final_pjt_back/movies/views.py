@@ -12,6 +12,9 @@ from .serializers import (
     MovieSerializer,
     CommentSerializer,
     WishlistSerializer,
+
+    CommentMovieSerializer
+
     CommentSetSerializer,
 )
 from .models import Movie, Comment
@@ -185,6 +188,7 @@ def check_movie(request):
 @api_view(['POST'])
 def get_user_comment_list(request):
     username = request.data.get('username')
+
     comment_list = Comment.objects.filter(username=username).select_related('movie')
     serializer = CommentSetSerializer(comment_list, many=True)
 

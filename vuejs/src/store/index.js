@@ -226,14 +226,18 @@ export default new Vuex.Store({
       const response = await axios.post(GET_COMMENT_URL, data)
       let userCommentList = [];
       for (let i=0; i<response.data.length; i++) {
-        let isAdded = false
+
+        let isSkiped = false
         for (let j=0; j<userCommentList.length; j++) {
           if (userCommentList[j].movie.id == response.data[i].movie.id) {
-            isAdded = true
+            isSkiped = true
             break
           }
         }
-        if (isAdded) continue
+        if (response.data[i].username != localStorage.getItem("username")) {
+          isSkiped = true
+        }
+        if (isSkiped) continue
         else userCommentList.push(response.data[i])
       }
       commit('GET_USER_COMMENT', userCommentList)
