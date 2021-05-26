@@ -2,8 +2,10 @@
   <div class="thumb-example">
     <!-- swiper1 -->
     <swiper class="swiper gallery-top" :options="swiperOptionTop" ref="swiperTop">
-      <swiper-slide v-for="movie in GetBestMovieList" :key="movie.pk">
-        <img class="w-100 gallery-top-image" :src="movie.poster">
+      <swiper-slide>
+        <a href="#">
+          <img src="https://caching2.lottecinema.co.kr/lotte_image/2021/Spiral/0520/Spiral_1920774.jpg" data-video="https://caching2.lottecinema.co.kr/lotte_image/2021/Spiral/0511/Spiral_1280720.mp4" alt="국내 박스오피스 1위 스파이럴 절찬상영중청소년관람불가">
+        </a>
       </swiper-slide>
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
@@ -64,8 +66,6 @@
       })
     }
   }
-  console.log("ZZZ")
-  console.log(this)
 </script>
 
 <style lang="scss" scoped>
