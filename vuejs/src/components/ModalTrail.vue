@@ -1,7 +1,7 @@
 <template>
 
   <div class="container mb-4">
-    <div class="container h-100">
+    <div class="container h-100 pb-4">
       <div class="h-100 video-container embed-responsive embed-responsive-16by9" v-if="videoList.length">
         <iframe width="100%" height="100%" class="embed-responsive-item" :src="videoUrl" allowfullscreen frameborder="0"/>
       </div>

@@ -13,7 +13,10 @@
         v-for="comment in getCommentList"
         :key="comment.id"
       >
-        <h1>{{ comment.username }}</h1>
+      <div class="d-flex align-items-center justify-content-between">
+        <h1>{{ comment.username }}</h1> 
+        <span>{{ comment.rank }} / 5</span>
+      </div>
         <p>{{ comment.content }}</p>
       </div>
     </div>
@@ -30,6 +33,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   name: 'Comment',
   data() {
@@ -39,7 +44,7 @@ export default {
   },
   computed: {
     getCommentList() {
-      return this.$store.getters.getMovieCommentList
+      return _.reverse(this.$store.getters.getMovieCommentList)
     },
   },
   props: {

@@ -13,19 +13,19 @@
                 </div>
                 <div class="me-5">
                   <i v-if="category === 'comment'" class="fas fa-edit fa-2x write-button" @click="showModal = true"></i>
-                  <CommentModal v-if="showModal" @close="showModal = false" :movie="movie"/>
+                  <CommentModal v-if="showModal" @close="closeEvent" :movie="movie"/>
                   <i class="fas fa-times fa-2x cancel-button" @click="$emit('close')" style="color:white;"></i>
                 </div>
               </div>
               <!-- body -->
               <div v-if="category === 'info' " class="modal-body d-flex justify-content-between">
-                <div class="mt-5">
-                  <h1>{{ movie.title }}</h1>
-                  <p>{{ movie.vote_average }}/10</p>
-                  <p>{{ movie.overview }}</p>
+                <div class="mt-5 px-3">
+                  <h1 class="title-font pb-2">{{ movie.title }}</h1>
+                  <p class="content-font">{{ movie.vote_average }}/10</p>
+                  <p class="content-font">{{ movie.overview }}</p>
                 </div>
                 <div>
-                  <img :src="movie.poster" alt="" class="poster">
+                  <img :src="movie.poster" alt="" class="poster p-3">
                 </div>
               </div>
               <div v-if="category === 'comment' " class="modal-body comment-page">
@@ -46,6 +46,7 @@
 import CommentModal from '@/components/CommentModal'
 import ModalTrail from '@/components/ModalTrail'
 import Comment from '@/components/Comment'
+import _ from 'lodash'
 
 export default {
   name: 'ModalView',
@@ -71,7 +72,7 @@ export default {
   },
   computed: {
     getCommentList() {
-      return this.$store.getters.getMovieCommentList
+      return _.reverse(this.$store.getters.getMovieCommentList)
     },
   },
   methods: {
@@ -86,6 +87,10 @@ export default {
       this.category = 'trail'
       // this.video = video
     },
+    closeEvent() {
+      this.showModal = false
+      this.movieComment()
+    }
   },
   created() {
   },
@@ -159,8 +164,8 @@ export default {
 .poster {
   float: right;
   top: 0;
-  width: 450px;
-  height: 70vh;
+  width: 300px;
+  height: 65vh;
 }
 
 .cancel-button {
@@ -181,5 +186,13 @@ export default {
   top: 15%;
 }
 
+.content-font {
+  font-family: 'Nanum Myeongjo', serif;
+}
+
+.title-font{
+  font-family: 'Nanum Myeongjo', serif;
+  font-family: 'Poor Story', cursive; 
+}
 
 </style>

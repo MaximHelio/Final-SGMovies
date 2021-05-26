@@ -23,7 +23,9 @@ export default new Vuex.Store({
     bestMovieList: [],
     bestMovieItem: [],
     comments: {},
+    commentList: [],
     nowPage: 'home',
+    userCommentList: [],
   },
   getters: {
     getPage(state) {
@@ -52,6 +54,12 @@ export default new Vuex.Store({
     },
     getMovieComment(state) {
       return state.comments
+    },
+    getMovieCommentList(state) {
+      return state.commentList
+    },
+    getUserCommentList(state) {
+      return state.userCommentList
     },
   },
   mutations: {
@@ -104,6 +112,14 @@ export default new Vuex.Store({
     },
     CREATE_COMMENT(state, comments) {
       state.comments = comments
+    },
+    GET_MOVIE_COMMENT(state, commentList) {
+      state.commentList = commentList
+      console.log(state.commentList)
+    },
+    GET_USER_COMMENT(state, commentList) {
+      state.userCommentList = commentList
+      console.log(state.userCommentList)
     },
   },
   actions: {
@@ -190,6 +206,17 @@ export default new Vuex.Store({
         'comments': response.data,
       }
       commit('CREATE_COMMENT', commentCreateData)
+    },
+    async GET_MOVIE_COMMENT({ commit }, movie_id) {
+      const GET_COMMENT_URL = `/api/v1/movies/${movie_id}/comments/`
+      const response = await axios.get(GET_COMMENT_URL)
+      commit('GET_MOVIE_COMMENT', response.data)
+    },
+    async GET_USER_COMMENT({ commit }, params) {
+      const GET_COMMENT_URL = `/api/v1/movies/user/comment/`
+      const data = params
+      const response = await axios.post(GET_COMMENT_URL, data)
+      commit('GET_USER_COMMENT', response.data)
     },
   },
   modules: {

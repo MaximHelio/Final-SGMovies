@@ -3,7 +3,7 @@
     <div class="col my-4" id="">
       <div class="movie" @click="chkMovie">
         <img class="w-75 border" :src="movie.poster" alt="">
-        <span class="mt-3">{{ movie.title }}</span>
+        <span class="mt-3">{{ movie.title }}<i class="bi bi-bookmark-plus"></i></span>
       </div>
     </div>
   </div>

@@ -8,15 +8,15 @@
             <img @click="homePage" src="../assets/logo.png" alt="" class="logo">
           </router-link>
           <router-link 
-            class="ms-5" 
-            to="/movie-evaluation" 
+            class="ms-5 link" 
+            to="/movie-evaluation"
           >
             <span @click="changePage">영화 평가하기</span>
           </router-link>
         </div>
         <div class="user-info dropdown">
           <div class="" id="drop" data-bs-toggle="dropdown">
-            <img src="../assets/man.jpg" alt="">
+            <img src="../assets/man.jpg" alt="" class="me-3">
             <p class="text-light">{{ getUser }}</p>
           </div>
           <ul class="dropdown-menu" aria-labelledby="drop">
@@ -78,5 +78,17 @@ export default {
   display: inline;
   color: white;
   margin-right: 20px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link > span {
+  color: white; 
+}
+
+.link > span:hover {
+  color: gold;
 }
 </style>
