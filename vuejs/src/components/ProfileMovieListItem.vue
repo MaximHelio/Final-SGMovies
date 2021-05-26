@@ -18,7 +18,7 @@
 import ModalView from "@/components/ModalView"
 
 export default {
-  name: 'MovieListItem',
+  name: 'ProfileMovieListItem',
   components: {
     ModalView
   },
