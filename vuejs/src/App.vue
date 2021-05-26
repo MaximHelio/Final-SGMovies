@@ -29,7 +29,6 @@ export default {
   },
   data () {
     return {
-      page: ""
     }
   },
   computed: {
@@ -38,6 +37,9 @@ export default {
     },
     getUsername() {
       return this.$store.getters.getUserInfo
+    },
+    page() {
+      return this.$store.getters.getPage
     }
   },
   methods: {
@@ -48,13 +50,13 @@ export default {
       this.$store.commit('PROFILE')
     },
     evalPage() {
-      this.page = 'eval'
+      this.$store.commit('EVAL')
     },
     homePage() {
-      this.page = 'home'
+      this.$store.commit('HOME')
     },
     profilePage() {
-      this.page="profile"
+      this.$store.commit('PROFILE')
     },
   },
 }
@@ -102,7 +104,7 @@ p {
   color: white;
   margin-right: 20px;
 }
-a{
+a {
   text-decoration: none;
   color: white;
 }
