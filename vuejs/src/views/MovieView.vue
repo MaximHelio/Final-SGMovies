@@ -2,6 +2,7 @@
   <div class="container">
     <MovieCarousel />
     <RecentMovie />
+    <RecommendedMovieList />
     <MovieList />
     <Movie />
   </div>
@@ -12,6 +13,7 @@ import MovieCarousel from '@/components/MovieCarousel'
 import MovieList from '@/components/MovieList'
 import RecentMovie from '@/components/RecentMovie'
 import Movie from '@/components/Movie'
+import RecommendedMovieList from '@/components/RecommendedMovieList'
 
 export default {
   name: 'MovieView',
@@ -19,7 +21,8 @@ export default {
     MovieCarousel,
     MovieList,
     RecentMovie,
-    Movie
+    Movie,
+    RecommendedMovieList,
   },
   created() {
     this.$store.dispatch('GET_MOVIE_LIST')

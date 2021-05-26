@@ -1,7 +1,8 @@
 <template>
   <div>
     <div>
-      <p class="text-light">영화 평가 페이지</p>
+      <h4 class="text-light mt-5">감명 깊게 본 영화를 골라주세요</h4>
+      <p class="text-light">(당신의 영화 추천에 도움이 됩니다)</p>
       <EvalMovieList />
     </div>
   </div>

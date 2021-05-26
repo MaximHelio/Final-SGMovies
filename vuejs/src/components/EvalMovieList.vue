@@ -1,11 +1,16 @@
 <template>
+<div>
+  <p class="text-light">{{ myMovieList }}</p>
   <div class="row row-cols-4">
     <EvalMovieListItem
       v-for="movie in movieList"
-      :key="movie.pk"
+      :key="movie.id"
       :movie=movie
+      :myMovieList="myMovieList"
+      :class="{ checked: movie.id in myMovieList }"
     />
   </div>
+</div>
 </template>
 
 <script>
@@ -21,6 +26,9 @@ export default {
     movieList() {
       return this.$store.getters.getMovieList
     },
+    myMovieList() {
+      return this.$store.getters.getMyMovieList
+    }
   },
   methods: {
     checkBottom() {
@@ -31,8 +39,9 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('GET_MOVIE_LIST')
     document.addEventListener('scroll', _.throttle(this.checkBottom,500))
+    this.$store.dispatch('GET_MOVIE_LIST')
+    this.$store.dispatch('GET_MY_MOVIE_LIST')
   },
 }
 </script>
