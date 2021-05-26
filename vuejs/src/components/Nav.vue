@@ -11,7 +11,7 @@
             class="ms-5 link" 
             to="/movie-evaluation"
           >
-            <span @click="changePage">영화 평가하기</span>
+            <span @click="changePage">영화 고르기</span>
           </router-link>
         </div>
         <div class="user-info dropdown">

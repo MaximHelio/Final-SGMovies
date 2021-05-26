@@ -26,7 +26,10 @@ export default new Vuex.Store({
     commentList: [],
     nowPage: 'home',
     userCommentList: [],
+    myMovieList: [],
+    recommendedMovieList: [],
     userWishList: [],
+
   },
   getters: {
     getPage(state) {
@@ -62,6 +65,16 @@ export default new Vuex.Store({
     getUserCommentList(state) {
       return state.userCommentList
     },
+    getMyMovieList(state) {
+      const myList = []
+      for (let i = 0; i < state.myMovieList.length; i++ ) {
+        myList.push(state.myMovieList[i].movie)
+      }
+      return myList
+    },
+    getRecommendedMovieList(state) {
+      return state.recommendedMovieList
+    }
     getUserWishList(state) {
       return state.userWishList
     },
@@ -109,7 +122,6 @@ export default new Vuex.Store({
     },
     SEARCH_MOVIE(state, searchedMovieList) {
       state.searchedMovieList = searchedMovieList
-      console.log(state.searchedMovieList)
     },
     FILTER_MOVIE(state, filterMovieList) {
       state.movieList = filterMovieList
@@ -119,11 +131,15 @@ export default new Vuex.Store({
     },
     GET_MOVIE_COMMENT(state, commentList) {
       state.commentList = commentList
-      console.log(state.commentList)
     },
     GET_USER_COMMENT(state, commentList) {
       state.userCommentList = commentList
-      console.log(state.List)
+    },
+    GET_MY_MOVIE_LIST(state, myMovieList) {
+      state.myMovieList = myMovieList
+    },
+    GET_RECOMMENDED_MOVIE_LIST(state, recommendedMovieList) {
+      state.recommendedMovieList = recommendedMovieList 
     },
     GET_USER_WISH(state, wishList) {
       state.userWishList = wishList
@@ -248,6 +264,21 @@ export default new Vuex.Store({
       const response = await axios.post(LIKE_MOVIE_LIST_URL, data)
       commit('GET_LIKE_MOVIE_LIST', response.data)
     },
+    async GET_MY_MOVIE_LIST({ commit }) {
+      const username = localStorage.getItem('username')
+      const GET_MY_MOVIE_URL = `/api/v1/movies/like/${username}`
+
+      const response = await axios.get(GET_MY_MOVIE_URL)
+      console.log(response)
+      commit('GET_MY_MOVIE_LIST', response.data)
+    },
+    async GET_RECOMMENDED_MOVIE_LIST({ commit }) {
+      const username = localStorage.getItem('username')
+      const GET_RECOMMENDED_MOVIE_LIST_URL = `/api/v1/movies/recommend/${username}`
+      const response = await axios.get(GET_RECOMMENDED_MOVIE_LIST_URL)
+      console.log(response.data)
+      commit('GET_RECOMMENDED_MOVIE_LIST', response.data)
+    }
   },
   modules: {
   }
