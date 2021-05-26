@@ -13,7 +13,11 @@ from django.shortcuts import get_object_or_404
 from .serializers import (
     MovieSerializer,
     CommentSerializer,
-    WishlistSerializer
+    WishlistSerializer,
+
+    CommentMovieSerializer
+
+    CommentSetSerializer,
 )
 from .models import Movie, Comment, Wishlist
 
@@ -68,9 +72,7 @@ def movie_detail(request, todo_id):
 # 댓글 전체 리스트 가져오기
 @api_view(['GET'])
 def comment_list(request, movie_id):
-    print(movie_id)
     comments = Comment.objects.filter(movie_id=movie_id)
-    print(comments)
     serializer = CommentSerializer(comments, many=True)
     return Response(data=serializer.data)
     # comments = Comment.objects.all()
@@ -122,7 +124,7 @@ def comment_detail(request, comment_id):
             serializer.save()
             return Response(data=serializer.data)
 
-# Create your views here.
+# 최신 영화 불러오기
 @api_view(['GET'])
 def latest(request):
     # 1. 모든 movie list를 가져온다
@@ -172,6 +174,7 @@ def check_movie(request):
     user = get_object_or_404(get_user_model(), username=username)
     movie = get_object_or_404(Movie, id=movie_id)
 
+
     data = {
         'user': user,
         'movie': movie,
@@ -183,6 +186,7 @@ def check_movie(request):
     print(user_data.action)
     print(movie.genres)
     genres = movie.genres.split(' ')
+
 
     if serializer.is_valid(raise_exception=True):
         if Wishlist.objects.filter(user=user.id, movie=movie.id).exists():
@@ -256,8 +260,9 @@ def check_movie(request):
 @api_view(['POST'])
 def get_user_comment_list(request):
     username = request.data.get('username')
-    comment_list = Comment.objects.select_related('movie').all()
-    serializer = CommentSerializer(comment_list, many=True)
+
+    comment_list = Comment.objects.filter(username=username).select_related('movie')
+    serializer = CommentSetSerializer(comment_list, many=True)
 
     return Response(data=serializer.data)
 
@@ -318,3 +323,4 @@ def recommend_movie(request, username):
         
     
     return Response(data=serializer.data)
+
