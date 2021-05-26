@@ -19,6 +19,7 @@
           :class="{ searching: searching }"
           @input=onSearchInput
           v-model.trim=keyword
+          placeholder="검색"
         >
         <i class="fas fa-search fa-lg search" style="color:white;" @click=onSearch></i>
       </div>

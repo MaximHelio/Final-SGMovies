@@ -167,3 +167,11 @@ def filter_movie(request, category):
 def check_movie(request):
     print(request.data)
     return Response({'message':'wait'})
+
+@api_view(['POST'])
+def get_user_comment_list(request):
+    username = request.data.get('username')
+    comment_list = Comment.objects.select_related('movie').all()
+    serializer = CommentSerializer(comment_list, many=True)
+
+    return Response(data=serializer.data)
