@@ -19,7 +19,7 @@
             </fieldset>
             <input v-model="comments.comment" type="text" class="mt-3 w-50 h-25 bg-light" @keyup.enter="onSubmit" ref="commentInput">
             <div class="d-flex mt-4">
-              <button class="btn btn-light me-4" @click="onSubmit">작성 완료</button>
+              <button class="btn btn-light me-4" @click="onSubmit" >작성 완료</button>
               <button class="btn btn-light ms-4" @click="$emit('close')">닫기</button>
             </div>
           </div>
@@ -55,6 +55,7 @@ export default {
       this.comments.userId = localStorage.getItem('username')
 
       this.$store.dispatch('CREATE_COMMENT', this.comments)
+      this.$emit('close')
       this.$store.dispatch('GET_MOVIE_COMMENT', this.movie.id)
       this.comments.comment = '' // input 태그 초기화
       this.$refs.commentInput.value

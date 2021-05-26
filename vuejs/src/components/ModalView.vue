@@ -13,7 +13,7 @@
                 </div>
                 <div class="me-5">
                   <i v-if="category === 'comment'" class="fas fa-edit fa-2x write-button" @click="showModal = true"></i>
-                  <CommentModal v-if="showModal" @close="showModal = false" :movie="movie"/>
+                  <CommentModal v-if="showModal" @close="closeEvent" :movie="movie"/>
                   <i class="fas fa-times fa-2x cancel-button" @click="$emit('close')" style="color:white;"></i>
                 </div>
               </div>
@@ -46,6 +46,7 @@
 import CommentModal from '@/components/CommentModal'
 import ModalTrail from '@/components/ModalTrail'
 import Comment from '@/components/Comment'
+import _ from 'lodash'
 
 export default {
   name: 'ModalView',
@@ -71,7 +72,7 @@ export default {
   },
   computed: {
     getCommentList() {
-      return this.$store.getters.getMovieCommentList
+      return _.reverse(this.$store.getters.getMovieCommentList)
     },
   },
   methods: {
@@ -86,6 +87,10 @@ export default {
       this.category = 'trail'
       // this.video = video
     },
+    closeEvent() {
+      this.showModal = false
+      this.movieComment()
+    }
   },
   created() {
   },

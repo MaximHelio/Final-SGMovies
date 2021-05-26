@@ -135,6 +135,7 @@ export default {
   .search-box {
     width: 0;
     padding: 0;
+    background-color: white;
     border: none;
     border-radius: 10px;
     transition: all .5s;
