@@ -10,30 +10,31 @@
           <span>찜한 영화<br><br>13</span>
         </div>
         <div class="data-area">
-          <span>
-            평가한 영화<br><br>
-            <span>{{userCommentList.length}}</span>
+          <span>댓글 쓴 영화<br>
+          <br><span>{{ userCommentList.length }}</span>
           </span>
         </div>
       </div>
     </div>
     <div class="profile-body">
       <p class="profile-sub-title">찜한 영화</p>
-      <RecentMovie />
-      <p class="profile-sub-title">3점 이상 준 영화</p>
+      <WishList />
+      <p class="profile-sub-title">댓글 쓴 영화</p>
       <div class="row row-cols-4" v-if="keyword.length === 0">
-        <MovieListItem
+        <ProfileMovieListItem
           v-for="item in userCommentList"
           :key="item.movie.pk"
           :movie="item.movie"
+          :comment="item"
           :genre="item.movie.genres"
         />
       </div>
       <div class="row row-cols-4" v-else>
-        <MovieListItem
+        <ProfileMovieListItem
           v-for="item in userCommentList"
           :key="item.movie.pk"
           :movie="item.movie"
+          :comment="item"
           :genre="item.movie.genres"
         />
       </div>
@@ -94,8 +95,7 @@ p.profile-sub-title {
 
 <script>
 // const SERVER_URL = 'http://localhost:8000'
-import MovieListItem from '@/components/MovieListItem'
-import RecentMovie from '@/components/RecentMovie'
+import ProfileMovieListItem from '@/components/ProfileMovieListItem'
 import _ from 'lodash'
 import Vue from 'vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -112,8 +112,7 @@ Vue.use(IconsPlugin)
 export default {
   name: 'Profile',
   components: {
-    MovieListItem,
-    RecentMovie,
+    ProfileMovieListItem,
   },
   data() {
     return {
