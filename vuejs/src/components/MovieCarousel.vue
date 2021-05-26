@@ -96,7 +96,7 @@
     }
 
     &.gallery-top {
-      height: 70%;
+      height: 100%;
       width: 100%;
     }
     &.gallery-thumbs {
@@ -115,8 +115,8 @@
 
   img.gallery-top-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 70%;
+    object-fit: contain;
   }
 
   img.gallery-thumbs-image {

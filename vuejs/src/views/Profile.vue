@@ -10,7 +10,10 @@
           <span>찜한 영화<br><br>13</span>
         </div>
         <div class="data-area">
-          <span>평가한 영화<br><br>13</span>
+          <span>
+            평가한 영화<br><br>
+            <span>{{userCommentList.length}}</span>
+          </span>
         </div>
       </div>
     </div>
@@ -20,18 +23,18 @@
       <p class="profile-sub-title">3점 이상 준 영화</p>
       <div class="row row-cols-4" v-if="keyword.length === 0">
         <MovieListItem
-          v-for="movie in movieList"
-          :key="movie.pk"
-          :movie="movie"
-          :genre="movie.genres"
+          v-for="item in userCommentList"
+          :key="item.movie.pk"
+          :movie="item.movie"
+          :genre="item.movie.genres"
         />
       </div>
       <div class="row row-cols-4" v-else>
         <MovieListItem
-          v-for="movie in searchMovieList"
-          :key="movie.pk"
-          :movie="movie"
-          :genre="movie.genres"
+          v-for="item in userCommentList"
+          :key="item.movie.pk"
+          :movie="item.movie"
+          :genre="item.movie.genres"
         />
       </div>
     </div>
@@ -118,6 +121,7 @@ export default {
       state: 1,
       searching: false,
       keyword: '',
+      userName : '',
     }
   },
   props: {
@@ -133,6 +137,9 @@ export default {
     },
     getUser() {
       return localStorage.getItem("username")
+    },
+    userCommentList() {
+      return this.$store.getters.getUserCommentList
     },
   },
   methods: {
@@ -174,9 +181,14 @@ export default {
     onSearchInput() {
       _.throttle(this.$store.dispatch('SEARCH_MOVIE', this.keyword),150)
       console.log(this.searchMovieList)
-    }
+    },
   },
   created() {
+    this.userName = localStorage.getItem('username')
+    const params = {
+      username: this.userName
+    }
+    this.$store.dispatch('GET_USER_COMMENT', params)
     this.$store.dispatch('GET_MOVIE_LIST')
     document.addEventListener('scroll', _.throttle(this.checkBottom,500))
     this.getProfileUser()

@@ -35,4 +35,8 @@ urlpatterns = [
     # 영화 필터링
     path('<str:category>/', views.filter_movie),
 
+    # 사용자 댓글 리스트
+    # POST http://localhost:8000/api/v1/movies/user/comment
+    path('user/comment/', views.get_user_comment_list),
+
 ]
