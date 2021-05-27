@@ -68,12 +68,13 @@ export default {
   methods: {
     all() {
       this.state = 1
-      this.$store.dispatch('GET_MOVIE_LIST')
-      document.addEventListener('scroll', _.throttle(this.checkBottom,500))
+      this.$store.dispatch('FILTER_MOVIE','전체')
+      // document.addEventListener('scroll', _.throttle(this.checkBottomFilter('전체'),500))
     },
     action() {
       this.state = 2
       this.$store.dispatch('FILTER_MOVIE','액션')
+      // document.addEventListener('scroll', _.throttle(this.checkBottomFilter('액션'),500))
     },
     comedy() {
       this.state = 3
@@ -93,9 +94,16 @@ export default {
     },
     checkBottom() {
       const {scrollTop, clientHeight, scrollHeight} = document.documentElement
-      if (scrollHeight - scrollTop === clientHeight) {
+      if (scrollHeight - scrollTop <= clientHeight + 400) {
         this.$store.dispatch('GET_MOVIE_LIST')
       }
+    },
+    checkBottomFilter(category) {
+      console.log(category)
+      // const {scrollTop, clientHeight, scrollHeight} = document.documentElement
+      // if (scrollHeight - scrollTop <= clientHeight + 400) {
+      //   this.$store.dispatch('GET_MOVIE_LIST')
+      // }
     },
     onSearch() {
       this.searching = !this.searching

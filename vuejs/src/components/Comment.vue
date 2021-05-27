@@ -14,8 +14,13 @@
         :key="comment.id"
       >
       <div class="d-flex align-items-center justify-content-between">
-        <h1>{{ comment.username }}</h1> 
-        <span>{{ comment.rank }} / 5</span>
+        <div>
+          <h1>{{ comment.username }}</h1> 
+          <p>{{ comment.created_at | moment('YYYY-MM-DD HH:mm:ss') }}</p>
+        </div>
+        <div>
+          <span>{{ comment.rank }} / 5</span>
+        </div>
       </div>
         <p>{{ comment.content }}</p>
       </div>

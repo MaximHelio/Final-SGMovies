@@ -163,7 +163,11 @@ def search_movie(request, keyword):
 
 @api_view(['GET'])
 def filter_movie(request, category):
-    movies = Movie.objects.filter(genres__contains=category)
+    if category == '전체':
+        movies = Movie.objects.all()
+    else:
+        movies = Movie.objects.filter(genres__contains=category)
+    
 
     serializer = MovieSerializer(movies, many=True)
 
