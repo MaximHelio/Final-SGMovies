@@ -1,14 +1,13 @@
 <template>
   <div class="profile-area">
     <div class="profile-header">
-      <div class="profile-header-left title-font">
+      <div class="profile-header-left">
         <img class="profile-img" src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairDreads&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Heather&eyeType=Side&eyebrowType=UpDownNatural&mouthType=Disbelief&skinColor=Brown" />
         <h3 class="fs-3 fw-bold content-font">  {{ getUser }}  님, 안녕하세요</h3>
       </div>
       <div class="profile-header-right">
       
         <div class="data-area">
-
           <span>댓글 쓴 영화<br>
           <br><span>{{ userCommentList.length }}</span>
           </span>
@@ -18,7 +17,7 @@
     <div class="profile-body">
       <p class="profile-sub-title"></p>
       <div>
-        <div class="font-extrabold text-lg">{{ getUser }}님 </div>
+        <Random />
       </div>
       <p class="profile-sub-title">댓글 쓴 영화</p>
       <div class="row row-cols-4">
@@ -32,6 +31,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <style scoped>
@@ -58,6 +58,8 @@ img.profile-img {
     font-size: 38px;
     font-weight: 700;
     display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
 }
 
 .data-area:first-child {
@@ -81,10 +83,16 @@ p.profile-sub-title {
     padding: 0 20px;
     margin: 10px 0;
 }
+
+.pick {
+  width: 300px;
+  height: 400px;
+}
 </style>
 
 <script>
 // const SERVER_URL = 'http://localhost:8000'
+import Random from '@/components/Random'
 import ProfileMovieListItem from '@/components/ProfileMovieListItem'
 import _ from 'lodash'
 import Vue from 'vue'
@@ -102,6 +110,7 @@ Vue.use(IconsPlugin)
 export default {
   name: 'Profile',
   components: {
+    Random,
     ProfileMovieListItem,
   },
   data() {
@@ -187,7 +196,6 @@ export default {
     this.$store.dispatch('GET_USER_COMMENT', params)
     this.$store.dispatch('GET_MOVIE_LIST')
     document.addEventListener('scroll', _.throttle(this.checkBottom,500))
-
   },
 }
 </script>

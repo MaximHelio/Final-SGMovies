@@ -22,7 +22,7 @@ class CommentMovieSerializer(serializers.ModelSerializer):
         model = Comment 
         fields = ('user','movie', 'rank', 'content', 'username', 'id')
         # 댓글을 작성할 때, movie는 입력하지 않을 것이므로, movie필드는 읽기 전용.
-        read_only_fields = ['user', 'movie', 'id']
+        read_only_fields = ['user', 'movie', 'id', '']
 
 
 class MovieItemSerializer(serializers.ModelSerializer):

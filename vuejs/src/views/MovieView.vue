@@ -1,10 +1,16 @@
 <template>
-  <div class="container">
+  <div>
+
     <MovieCarousel />
+   <div class="container">
     <RecentMovie />
     <RecommendedMovieList />
     <MovieList />
     <Movie />
+
+  </div>
+
+  
   </div>
 </template>
 
