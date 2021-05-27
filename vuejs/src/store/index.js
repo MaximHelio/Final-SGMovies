@@ -127,7 +127,7 @@ export default new Vuex.Store({
       state.movieList = filterMovieList
     },
     CREATE_COMMENT(state, comments) {
-      console.log(comments)
+      
       state.comments = comments
       state.commentList.push(comments)
     },
@@ -149,7 +149,7 @@ export default new Vuex.Store({
     },
     GET_USER_WISH(state, wishList) {
       state.userWishList = wishList
-      console.log(state.userWishList)
+      
     },
     CHECK_MOVIE(state, payload) {
       state.myMovieList.push(payload)
@@ -198,7 +198,7 @@ export default new Vuex.Store({
       newlatestMovieList = newlatestMovieList.sort(function (a, b) {
         return b.release_date.replace(/-/g, '') - a.release_date.replace(/-/g, '');
       }).slice(0, 15)
-      console.log(newlatestMovieList)
+      
       commit('GET_LATEST_MOVIE_LIST', newlatestMovieList)
     },
     async GET_BEST_MOVIE_LIST({ commit }) {
@@ -206,7 +206,7 @@ export default new Vuex.Store({
       const response = await axios.get(BEST_MOVIE_LIST_URL)
       let bestMovieList = response.data
       bestMovieList = bestMovieList.sort().slice(0, 5)
-      console.log(bestMovieList)
+      
       commit('GET_BEST_MOVIE_LIST', bestMovieList)
     },
     async SEARCH_MOVIE({ commit }, keyword) {
@@ -217,18 +217,18 @@ export default new Vuex.Store({
     async FILTER_MOVIE({ commit }, category) {
       const FILTER_MOVIE_URL = `/api/v1/movies/${category}`
       const response = await axios.get(FILTER_MOVIE_URL)
-      console.log(response.data)
+      
       commit('FILTER_MOVIE', response.data)
     },
     async CHECK_MOVIE({commit}, movie_id) {
       const CHECK_MOVIE_URL = '/api/v1/movies/checklist/'
-      console.log(movie_id)
+      
       const data = {
         'username': localStorage.getItem('username'),
         'movie': movie_id
       }
       const response = await axios.post(CHECK_MOVIE_URL, data)
-      console.log(response)
+      
       commit('CHECK_MOVIE', response.data)
     },
     async CREATE_COMMENT({ commit }, comments){
@@ -248,8 +248,8 @@ export default new Vuex.Store({
     },
     async UPDATE_COMMENT({ commit }, comments) {
       const COMMENT_UPDATE_URL = `/api/v1/movies/comments/${comments.id}/`
-      const response = await axios.put(COMMENT_UPDATE_URL,comments)
-      console.log(response)
+      await axios.put(COMMENT_UPDATE_URL,comments)
+      
       commit('UPDATE_COMMENT')
     },
     async GET_MOVIE_COMMENT({ commit }, payload) {
@@ -292,14 +292,14 @@ export default new Vuex.Store({
       const GET_MY_MOVIE_URL = `/api/v1/movies/like/${username}`
 
       const response = await axios.get(GET_MY_MOVIE_URL)
-      console.log(response.data)
+      
       commit('GET_MY_MOVIE_LIST', response.data)
     },
     async GET_RECOMMENDED_MOVIE_LIST({ commit }) {
       const username = localStorage.getItem('username')
       const GET_RECOMMENDED_MOVIE_LIST_URL = `/api/v1/movies/recommend/${username}`
       const response = await axios.get(GET_RECOMMENDED_MOVIE_LIST_URL)
-      console.log(response.data)
+      
       commit('GET_RECOMMENDED_MOVIE_LIST', response.data)
     }
   },
