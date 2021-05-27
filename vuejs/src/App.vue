@@ -4,9 +4,6 @@
       <Nav
       />
       <router-view/>
-      <div v-if="page === 'home'">
-        <MovieView />
-      </div>
     </div>
     <div v-else>
      <LoginSignupView />
