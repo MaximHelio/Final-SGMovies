@@ -151,6 +151,9 @@ export default new Vuex.Store({
       state.userWishList = wishList
       console.log(state.userWishList)
     },
+    CHECK_MOVIE(state, payload) {
+      state.myMovieList.push(payload)
+    }
   },
   actions: {
     async CREATE_USER({ commit }, userInfo) {
@@ -226,7 +229,7 @@ export default new Vuex.Store({
       }
       const response = await axios.post(CHECK_MOVIE_URL, data)
       console.log(response)
-      commit('CHECK_MOVIE')
+      commit('CHECK_MOVIE', response.data)
     },
     async CREATE_COMMENT({ commit }, comments){
       const COMMENT_CREATE_URL = '/api/v1/movies/createcomments/'
@@ -242,6 +245,12 @@ export default new Vuex.Store({
       let response = await axios.delete(COMMENT_DELETE_URL)
       response = comment
       commit('DELETE_COMMENT', response)
+    },
+    async UPDATE_COMMENT({ commit }, comments) {
+      const COMMENT_UPDATE_URL = `/api/v1/movies/comments/${comments.id}/`
+      const response = await axios.put(COMMENT_UPDATE_URL,comments)
+      console.log(response)
+      commit('UPDATE_COMMENT')
     },
     async GET_MOVIE_COMMENT({ commit }, payload) {
       const movie_id = payload.movie_id
@@ -283,7 +292,7 @@ export default new Vuex.Store({
       const GET_MY_MOVIE_URL = `/api/v1/movies/like/${username}`
 
       const response = await axios.get(GET_MY_MOVIE_URL)
-      console.log(response)
+      console.log(response.data)
       commit('GET_MY_MOVIE_LIST', response.data)
     },
     async GET_RECOMMENDED_MOVIE_LIST({ commit }) {

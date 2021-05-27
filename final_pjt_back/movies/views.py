@@ -73,7 +73,7 @@ def movie_detail(request, todo_id):
 @api_view(['GET'])
 def comment_list(request, movie_id):
     comments = Comment.objects.filter(movie_id=movie_id).order_by('-pk')
-    print(len(comments))
+    
     paginator = Paginator(comments, 4)
 
     page = request.GET.get('page')
@@ -128,6 +128,7 @@ def comment_detail(request, comment_id):
             serializer.save()
             return Response(data=serializer.data)
 
+
 # 최신 영화 불러오기
 @api_view(['GET'])
 def latest(request):
@@ -171,7 +172,7 @@ def filter_movie(request, category):
 
 @api_view(['POST'])
 def check_movie(request):
-    print("요청")
+    
     username = request.data.get('username')
     movie_id = request.data.get('movie')
 
@@ -185,10 +186,9 @@ def check_movie(request):
     }
     serializer = WishlistSerializer(data=data)
 
-    print(user.userlike_set.get(user=user.pk))
+    
     user_data = user.userlike_set.get(user=user.pk)
-    print(user_data.action)
-    print(movie.genres)
+    
     genres = movie.genres.split(' ')
 
 
@@ -273,21 +273,17 @@ def get_user_comment_list(request):
 
 @api_view(['GET'])
 def get_like_movie_list(request, username):
-    print('요청', username)
+    
     user = get_object_or_404(get_user_model(), username=username)
     my_movie_list = Wishlist.objects.filter(user=user.id)
-    # movie_list = []
-    # for i in my_movie_list:
-    #     movie_list.append(i.movie)
+    
     serializer = WishlistSerializer(my_movie_list, many=True)
-    # print(serializer.data)
     
     return Response(data=serializer.data)
 
 
 @api_view(['GET'])
 def recommend_movie(request, username):
-    print('요청')
     user = get_object_or_404(get_user_model(), username=username)
     user_data = user.userlike_set.get(user=user.id)
     score = [
@@ -321,7 +317,6 @@ def recommend_movie(request, username):
     movie3 = Movie.objects.filter(genres__contains=top_three)
 
     recommended_movie = movie1.union(movie2,movie3)
-    print(recommended_movie)
 
     serializer = MovieSerializer(recommended_movie, many=True)
         

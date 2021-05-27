@@ -16,12 +16,10 @@
       </div>
     </div>
     <div class="profile-body">
-
       <p class="profile-sub-title"></p>
       <div>
         <div class="font-extrabold text-lg">{{ getUser }}님 </div>
       </div>
-
       <p class="profile-sub-title">댓글 쓴 영화</p>
       <div class="row row-cols-4">
         <ProfileMovieListItem
@@ -189,6 +187,7 @@ export default {
     this.$store.dispatch('GET_USER_COMMENT', params)
     this.$store.dispatch('GET_MOVIE_LIST')
     document.addEventListener('scroll', _.throttle(this.checkBottom,500))
+
   },
 }
 </script>
