@@ -29,7 +29,6 @@ export default {
     },
     comment: {
       type: Object,
-      required: true,
     }
   },
   data () {

@@ -28,6 +28,7 @@ export default {
   methods: {
     onSubmit() {
       this.$store.dispatch('AUTH_USER', this.userInfo)
+      this.$router.push('/')
     }
   }
 }

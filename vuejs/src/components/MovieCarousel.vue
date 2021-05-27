@@ -1,6 +1,5 @@
 <template>
   <div class="thumb-example">
-    <!-- swiper1 -->
     <swiper class="swiper gallery-top" :options="swiperOptionTop" ref="swiperTop">
       <swiper-slide>
         <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Ella/Ella_1920774.jpg">
@@ -35,12 +34,6 @@
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
     </swiper>
-    <!-- swiper2 Thumbs 밑에 있는  -->
-    <!-- <swiper class="swiper gallery-thumbs" :options="swiperOptionThumbs" ref="swiperThumbs">
-      <swiper-slide v-for="movie in GetBestMovieList" :key="movie.pk">
-        <img class="gallery-thumbs-image" :src="movie.poster">
-      </swiper-slide>
-    </swiper> -->
   </div>
 </template>
 
@@ -82,14 +75,14 @@
         }
       }
     },
-    mounted() {
-      this.$nextTick(() => {
-        const swiperTop = this.$refs.swiperTop.$swiper
-        const swiperThumbs = this.$refs.swiperThumbs.$swiper
-        swiperTop.controller.control = swiperThumbs
-        swiperThumbs.controller.control = swiperTop
-      })
-    }
+    // mounted() {
+    //   this.$nextTick(() => {
+    //     const swiperTop = this.$refs.swiperTop.$swiper
+    //     const swiperThumbs = this.$refs.swiperThumbs.$swiper
+    //     swiperTop.controller.control = swiperThumbs
+    //     swiperThumbs.controller.control = swiperTop
+    //   })
+    // }
   }
 </script>
 

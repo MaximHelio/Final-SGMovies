@@ -7,7 +7,7 @@
       <p>런타임: {{ movie.runtime }}</p>
       <!-- <p>댓글 수: {{ getCommentList.length }}</p> -->
     </div>
-    <div class="row row-cols-2 w-75">
+    <div class="row row-cols-2 w-75" v-if="getCommentList.length">
       <div
         class="col mt-4" 
         v-for="comment in getCommentList"
@@ -20,11 +20,14 @@
         <p>{{ comment.content }}</p>
       </div>
     </div>
+    <div v-else class="w-75">
+      <h1 class="text-start">아직 등록된 댓글이 없습니다.</h1>
+    </div>
   </div>
-  <div @click="getNextPage">
+  <div @click="getNextPage" v-if="getCommentList.length">
     <v-pagination
       v-model="page"
-      :length="15"
+      :length="5"
       :total-visible="7"
       class="mt-5"
       @click="getNextPage"

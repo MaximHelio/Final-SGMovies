@@ -18,25 +18,14 @@
     </div>
     <div class="profile-body">
       <p class="profile-sub-title">찜한 영화</p>
-      <WishList />
       <p class="profile-sub-title">댓글 쓴 영화</p>
-      <div class="row row-cols-4" v-if="keyword.length === 0">
+      <div class="row row-cols-4">
         <ProfileMovieListItem
           v-for="item in userCommentList"
           :key="item.movie.pk"
           :movie="item.movie"
           :comment="item"
           :genre="item.movie.genres"
-        />
-      </div>
-      <div class="row row-cols-4" v-else>
-        <ProfileMovieListItem
-          v-for="item in userCommentList"
-          :key="item.movie.pk"
-          :movie="item.movie"
-          :comment="item"
-          :genre="item.movie.genres"
-          @deleted="deleted"
         />
       </div>
     </div>
@@ -198,7 +187,7 @@ export default {
     this.$store.dispatch('GET_USER_COMMENT', params)
     this.$store.dispatch('GET_MOVIE_LIST')
     document.addEventListener('scroll', _.throttle(this.checkBottom,500))
-    this.getProfileUser()
+    //this.getProfileUser()
   },
 }
 </script>

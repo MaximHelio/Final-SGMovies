@@ -7,10 +7,15 @@
         <div class="d-flex">
           <button class="btn btn-sm text-danger" @click="deleteComment">댓글 삭제</button>
           <button class="btn btn-sm text-warning" @click="showModal = true">댓글 수정</button>
-          <CommentUpdateModal v-if="showModal" />
         </div>
       </div>
     </div>
+    <CommentUpdateModal 
+      v-if="showModal" 
+      @close="showModal=false"
+      :movie="movie"
+      :comment="comment"
+    />
     <ModalView 
       v-if="isModalViewed"
       :movie="movie"

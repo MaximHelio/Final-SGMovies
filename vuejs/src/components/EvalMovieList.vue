@@ -4,7 +4,7 @@
   <div class="row row-cols-4">
     <EvalMovieListItem
       v-for="movie in movieList"
-      :key="movie.id"
+      :key="movie.pk"
       :movie=movie
       :myMovieList="myMovieList"
       :class="{ checked: movie.id in myMovieList }"
