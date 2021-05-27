@@ -1,15 +1,14 @@
 <template>
   <div class="profile-area">
     <div class="profile-header">
-      <div class="profile-header-left">
+      <div class="profile-header-left title-font">
         <img class="profile-img" src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairDreads&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Heather&eyeType=Side&eyebrowType=UpDownNatural&mouthType=Disbelief&skinColor=Brown" />
-        <h3>{{ getUser }}님,</h3>
+        <h3 class="fs-3 fw-bold content-font">  {{ getUser }}  님, 안녕하세요</h3>
       </div>
       <div class="profile-header-right">
+      
         <div class="data-area">
-          <span>찜한 영화<br><br>13</span>
-        </div>
-        <div class="data-area">
+
           <span>댓글 쓴 영화<br>
           <br><span>{{ userCommentList.length }}</span>
           </span>
@@ -17,7 +16,10 @@
       </div>
     </div>
     <div class="profile-body">
-      <p class="profile-sub-title">찜한 영화</p>
+      <p class="profile-sub-title"></p>
+      <div>
+        <div class="font-extrabold text-lg">{{ getUser }}님 </div>
+      </div>
       <p class="profile-sub-title">댓글 쓴 영화</p>
       <div class="row row-cols-4">
         <ProfileMovieListItem
@@ -56,8 +58,6 @@ img.profile-img {
     font-size: 38px;
     font-weight: 700;
     display: inline-block;
-    vertical-align: middle;
-    margin: 0 10px;
 }
 
 .data-area:first-child {
@@ -187,7 +187,7 @@ export default {
     this.$store.dispatch('GET_USER_COMMENT', params)
     this.$store.dispatch('GET_MOVIE_LIST')
     document.addEventListener('scroll', _.throttle(this.checkBottom,500))
-    //this.getProfileUser()
+
   },
 }
 </script>
