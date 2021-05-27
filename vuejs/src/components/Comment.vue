@@ -12,6 +12,7 @@
         class="col mt-4" 
         v-for="comment in getCommentList"
         :key="comment.id"
+        
       >
       <div class="d-flex align-items-center justify-content-between">
         <div>

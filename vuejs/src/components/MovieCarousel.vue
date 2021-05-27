@@ -1,35 +1,36 @@
 <template>
   <div class="thumb-example">
-    <swiper class="swiper gallery-top" :options="swiperOptionTop" ref="swiperTop">
+
+    <swiper class="swiper gallery-top" id="bg" :options="swiperOptionTop" ref="swiperTop">
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Ella/Ella_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Ella/Ella_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Line/0525/Line_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Line/0525/Line_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Conjuring/0518/Conjuring_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Conjuring/0518/Conjuring_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/InTheHeights/InTheHeights_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/InTheHeights/InTheHeights_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Truck/0520/Truck_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Truck/0520/Truck_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Voyagers/0524/Voyagers_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Voyagers/0524/Voyagers_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Place/Place_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Place/Place_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Spiral/0520/Spiral_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Spiral/0520/Spiral_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/TheFast/0525/TheFast_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/TheFast/0525/TheFast_1920774.jpg">
       </swiper-slide>
       <swiper-slide>
-        <img class="main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Killer/0520/Killer_1920774.jpg">
+        <img class="bd main-header-style" src="https://caching2.lottecinema.co.kr/lotte_image/2021/Killer/0520/Killer_1920774.jpg">
       </swiper-slide>
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
@@ -79,6 +80,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .bd {
+    border-radius: 30px;
+  }
   .swiper {
     .swiper-slide {
       background-size: cover;
@@ -139,4 +143,13 @@
   .angled-gradient { 
     background: linear-gradient(70deg, blue, pink); 
     }
+
+  #bg { 
+  top: 0; 
+  left: 0; 
+    
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
 </style>

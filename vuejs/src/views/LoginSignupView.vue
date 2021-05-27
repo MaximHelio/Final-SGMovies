@@ -15,11 +15,14 @@
       </div>
     </div>
     <div class="sentence">
-      <h1>Welcome to our Cinema world</h1>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae nulla alias necessitatibus<br>
-       autem aspernatur in temporibus tempora sequi dolores<br>
-      esse corrupti, distinctio voluptatum ab nesciunt ad quod iusto exercitationem impedit?
+      <h1>Welcome to SGMovies</h1>
+      <h2>Play your movie right Now!<br>
+      Enjoy millions of the latest movies & 
+      Conversation with us more. 
+      Anytime, anywhere, across your devices.<br></h2>
+      <h3>Copyright © 2021 |   hyojin,  changyoung,  sunyoung</h3>
+      
+      <br>
     </div>
   </div>
 </template>
