@@ -157,3 +157,4 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+STATIC_URL = '/static/'

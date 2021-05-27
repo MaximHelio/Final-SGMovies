@@ -1,15 +1,15 @@
 <template>
   <div class="profile-area">
     <div class="profile-header">
-      <div class="profile-header-left">
+      <div class="profile-header-left title-font">
         <img class="profile-img" src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairDreads&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Heather&eyeType=Side&eyebrowType=UpDownNatural&mouthType=Disbelief&skinColor=Brown" />
         <h3>{{ getUser }}님,</h3>
       </div>
       <div class="profile-header-right">
-        <div class="data-area">
+        <div class="data-area title-font">
           <span>찜한 영화<br><br>13</span>
         </div>
-        <div class="data-area">
+        <div class="data-area title-font">
           <span>댓글 쓴 영화<br>
           <br><span>{{ userCommentList.length }}</span>
           </span>
@@ -17,9 +17,9 @@
       </div>
     </div>
     <div class="profile-body">
-      <p class="profile-sub-title">찜한 영화</p>
+      <p class="profile-sub-title title-font">찜한 영화</p>
       <WishList />
-      <p class="profile-sub-title">댓글 쓴 영화</p>
+      <p class="profile-sub-title title-font">댓글 쓴 영화</p>
       <div class="row row-cols-4" v-if="keyword.length === 0">
         <ProfileMovieListItem
           v-for="item in userCommentList"
@@ -67,8 +67,6 @@ img.profile-img {
     font-size: 38px;
     font-weight: 700;
     display: inline-block;
-    vertical-align: middle;
-    margin: 0 10px;
 }
 
 .data-area:first-child {
