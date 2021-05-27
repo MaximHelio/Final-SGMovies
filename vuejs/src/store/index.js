@@ -56,7 +56,7 @@ export default new Vuex.Store({
     getSearchMovieList(state) {
       return state.searchedMovieList
     },
-    getMovieComment(state) {
+    get(state) {
       return state.comments
     },
     getMovieCommentList(state) {

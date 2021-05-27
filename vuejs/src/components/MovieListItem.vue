@@ -25,11 +25,9 @@ export default {
   props: {
     movie: {
       type: Object,
-      required: true,
     },
     comment: {
       type: Object,
-      required: true,
     }
   },
   data () {
