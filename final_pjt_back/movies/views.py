@@ -15,7 +15,7 @@ from .serializers import (
     CommentSerializer,
     WishlistSerializer,
 
-    CommentMovieSerializer
+    CommentMovieSerializer,
 
     CommentSetSerializer,
 )

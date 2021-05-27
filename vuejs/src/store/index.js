@@ -74,7 +74,7 @@ export default new Vuex.Store({
     },
     getRecommendedMovieList(state) {
       return state.recommendedMovieList
-    }
+    },
     getUserWishList(state) {
       return state.userWishList
     },
