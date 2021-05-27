@@ -247,6 +247,209 @@ methods: {
 
 ### 3. Movie filter & Search
 
+영화 장르별 분류와 검색 기능입니다.
+
+#### 01 - Filter
+
+![](./design/filter.png)
+
+해당 창에서 각 장르에 맡게 아래 출력되는 영화 리스트가 필터링이 되도록 해주는 작업입니다.
+
+여러 방법들이 있겠지만, Django서버에 요청을 보내서 해당 장르에 해당되는 영화 리스트를 가져와 출력하는 방법을 사용했습니다.
+
+```html
+<div class="me-5 d-flex align-items-center">
+    <span class="fs-3 fw-bold content-font">모든 영화</span>
+    <div class="filter ms-5">
+        <span class="content-font" :class="{ pick: state == 1 }" @click=all>전체</span>
+        <span class="content-font" :class="{ pick: state == 2 }" @click=action>액션</span>
+        <span class="content-font" :class="{ pick: state == 3 }" @click=comedy>코미디</span>
+        <span class="content-font" :class="{ pick: state == 4 }" @click=horror>공포</span>
+        <span class="content-font" :class="{ pick: state == 5 }" @click=animation>애니메이션</span>
+        <span class="content-font" :class="{ pick: state == 6 }" @click=sf>SF</span>
+    </div>
+</div>
+```
+
+이런 형태로 필터링 하는 UI를 만들었고 각각을 클릭했을 때 함수가 실행되도록 해주었습니다.
+
+
+
+각각의 이벤트는 다음과 같습니다.
+
+```js
+methods: 
+	all() {
+      this.state = 1
+      this.$store.dispatch('FILTER_MOVIE','전체')
+    },
+    action() {
+      this.state = 2
+      this.$store.dispatch('FILTER_MOVIE','액션')
+    },
+    comedy() {
+      this.state = 3
+      this.$store.dispatch('FILTER_MOVIE','코미디')
+    },
+}
+```
+
+각각의 태그를 클릭했을 때, 그 태그에 해당하는 카테고리 이름을 함께 `FILTER_MOVIE`라는 acions에 보내주었습니다.
+
+그러면 actions에서 아래와 같이 받아서 처리해주는데,
+
+```js
+async FILTER_MOVIE({ commit }, category) {
+    const FILTER_MOVIE_URL = `/api/v1/movies/${category}`
+    const response = await axios.get(FILTER_MOVIE_URL)
+
+    commit('FILTER_MOVIE', response.data)
+    },
+```
+
+Django서버에 미리 만들어 둔 URL로 카테고리 정보와 함께 요청을 보내고 응답을 받아옵니다. 그리고 받아온 응답을 이제 mutations으로 commit을 통해 넘겨줍니다.
+
+acions에서 보내준 요청에 따라 Django에서는 필터링을 진행한 뒤 걸러진 영화 리스트를 보내주는데,
+
+```django
+@api_view(['GET'])
+def filter_movie(request, category):
+    if category == '전체':
+        movies = Movie.objects.all()
+    else:
+        movies = Movie.objects.filter(genres__contains=category)
+    
+
+    serializer = MovieSerializer(movies, many=True)
+
+    return Response(data=serializer.data)
+```
+
+카테고리가 전체일 경우에는 모든 영화를, 아닌 경우 해당 카테고리를 포함하고 있는 영화들을 DB에서 뽑아 넘겨주었습니다.
+
+마지막으로 다시 vue로 돌아와 mutations에서
+
+```vue
+FILTER_MOVIE(state, filterMovieList) {
+      state.movieList = filterMovieList
+    },
+```
+
+actions에서 보낸 필터링 된 영화 리스트를 받아서 state의 movieList에 저장해주면 필터링이 끝이 납니다.
+
+즉,` actions에서 요청 > Django서버에서 응답(필터링된 영화리스트) > mutations에서 state 변경`
+
+이런 흐름을 생각하고 코드를 작성했습니다.
+
+
+
+> **느낀점**
+>
+> 아무래도 DB에 접근을 하다보니 속도가 많이 느리다는 느낌이 있었습니다. 나중에 생각이 난 것인데 Vue에서 처음에 가져온 영화 리스트를 `forEach`를 통해서도 충분히 가능할 것 같다는 생각이 들었습니다.
+>
+> 다음에는 조금 더 고려해서 DB에는 최소한으로 접근하도록 하는 방법으로 구현을 해봐야겠습니다.
+
+
+
+#### 02 - Search
+
+검색도 마찬가지로 검색창에 있는 값을 keyword로 가져와 Django 서버에서 DB를 탐색해서 가져오는 흐름입니다.
+
+```html
+<div class="" style="right:0;">
+    <input 
+       type="text" 
+       class="me-3 search-box" 
+       :class="{ searching: searching }"
+       @input=onSearchInput
+       v-model.trim=keyword
+       placeholder="검색"
+     >
+    <i class="fas fa-search fa-lg search" style="color:white;" @click=onSearch></i>
+</div>
+
+<script>
+    ...
+    data() {
+       return {
+           ...
+           keyword: '',
+       } 
+    }
+    methods: {
+        ...
+        onSearchInput() {
+      		_.throttle(this.$store.dispatch('SEARCH_MOVIE', this.keyword),150)
+    	}
+    }
+</script>
+```
+
+검색창 구조는 이런식으로 v-model을 통해서 양방향 바인딩을 해주었다.
+
+공백인 경우에는 검색이 안되도록 trim을 사용했습니다.
+
+
+
+검색창에 입력했을 때에 @input 이벤트가 계속 실행되고 타이핑하는 동안 계속 `SEARCH_MOVIE`라는 actions를 실행합니다. lodash에 스로틀링을 사용해서 요청이 조금은 덜 가게 막아주었습니다.
+
+```js
+async SEARCH_MOVIE({ commit }, keyword) {
+    const SEARCH_MOVIE_URL = `/api/v1/movies/search/${keyword}`
+    const response = await axios.get(SEARCH_MOVIE_URL)
+    commit('SEARCH_MOVIE', response.data)
+},
+```
+
+actions에서는 비동기 요청으로 미리 Django 서버에 만들어둔 URL로 키워드와 함께 요청이 가고 응답이 오면 response 변수로 받은 뒤 mutations로 넘깁니다.
+
+```django
+@api_view(['GET'])
+def search_movie(request, keyword):
+    reg = re.compile(r'[a-zA-Z]')
+
+    if reg.match(keyword):
+        movies = Movie.objects.filter(original_title__contains=keyword)
+    else:
+        movies = Movie.objects.filter(title__contains=keyword)
+    
+    serializer = MovieSerializer(movies, many=True)
+    
+    return Response(data=serializer.data)
+```
+
+Django서버에서는 키워드와 함께 요청을 받고 contains를 통해 해당 키워드를 포함하는 영화 제목을 가진 영화들을 싹 모아서 보내줍니다.
+
+```vue
+SEARCH_MOVIE(state, searchedMovieList) {
+      state.searchedMovieList = searchedMovieList
+    },
+```
+
+그리고 mutations에서, django에서 받은 응답을 actions를 통해 받아서 state의 검색된 영화 리스트를 저장시켜주었습니다.
+
+```html
+    <div class="row row-cols-4" v-else>
+      <MovieListItem
+        v-for="movie in searchMovieList"
+        :key="movie.pk"
+        :movie="movie"
+      />
+    </div>
+```
+
+받아온 검색된 영화 리스트는 v-for문을 활용해서 화면에 출력시켜주었습니다.
+
+
+
+> **느낀점**
+>
+> 원했던 대로 잘 구현이 된 것 같습니다. 물론 코드가 잘 짜여져있진 않지만...
+>
+> 부족하지만 나름 만족할 만한 결과가 나와서 기분이 좋았습니다.
+>
+> 다만, 조금 아쉬웠던 점은 검색을 했을 때 검색된 영화 제목에 해당 키워드를 하이라이팅까지 해주는 것도 해보고 싶었지만 시간이 조금은 부족했던 것 같습니다.
+
 
 
 ### 4. Comment
@@ -473,8 +676,6 @@ export default {
 }
 ```
 
-
-
 동영상 스타일은 bootstrap을 적극 사용하였습니다.
 
 
@@ -497,9 +698,104 @@ Vuex앱의 구조가 크게 복잡하지 않다고 판단하여 `props & emit` �
 
 ### 7. Recommend
 
+영화 추천은 사용자가 주로 좋아하는 영화 장르를 위주로 추천해주는 흐름으로 구성하고 코드를 작성했습니다.
 
+이를 위해 각 장르의 카테고리를 갖는 테이블을 만들었고 유저와 외래키 관계를 지어주었습니다.
 
+1. 사용자가 감명깊게 본 영화들을 입력받아서 해당 영화의 장르에 따라 사용자의 장르 점수를 올립니다.
+   (ex. 액션영화였다면 액션장르 점수 ++)
+2. 점수를 기준으로 상위 3개의 장르에 해당하는 영화를 랜덤으로 8개 추천합니다.
 
+이렇게 두 과정을 거쳐 나만의 추천 알고리즘을 만들었습니다.
+
+```html
+  <div>
+    <div class="col my-4" id="">
+      <div class="movie" @click="chkMovie">
+        <img 
+          :class="{ userlike: myMovie.includes(movie.id) }" 
+          class="w-75 border" 
+          :src="movie.poster" 
+          alt=""
+        >
+        <span class="mt-3">{{ movie.title }}<i class="bi bi-bookmark-plus"></i></span>
+      </div>
+    </div>
+  </div>
+...
+<script>
+    ...
+  methods: {
+    chkMovie() {
+      const movie_id = this.movie.id
+      this.$store.dispatch('CHECK_MOVIE', movie_id)
+      this.$store.dispatch('GET_MY_MOVIE_LIST')
+    },
+  }
+</script>
+```
+
+기본적으로 전체 영화 리스트를 V-for문으로 돌렸습니다. (위 코드는 V-for문 돌리는 자식 컴포넌트)
+
+그리고 각 영화에 클릭이벤트를 걸어서 누르면 `CHECK_MOVIE`라는 actions가 실행됩니다.
+
+```js
+actions: {
+    ...
+    async CHECK_MOVIE({commit}, movie_id) {
+      const CHECK_MOVIE_URL = '/api/v1/movies/checklist/'
+      
+      const data = {
+        'username': localStorage.getItem('username'),
+        'movie': movie_id
+      }
+      const response = await axios.post(CHECK_MOVIE_URL, data)
+      
+      commit('CHECK_MOVIE', response.data)
+    },
+}
+```
+
+actions가 실행되면 미리 걸어둔 URL로 Django 서버로 요청이 가게 됩니다.
+
+백엔드에서 필요한 데이터를 담아서 axios요청을 보냈습니다.
+
+Django서버에서는 유저와 영화 데이터를 받고, 사용자의 테이블에 해당 사용자가 해당 영화를 좋아했다는 내용을 저장했습니다.(좋아요와 같은 기능)
+
+```js
+mutations: {
+    ...
+	CHECK_MOVIE(state, payload) {
+      state.myMovieList.push(payload)
+    }
+}
+```
+
+그리고 mutations에서 체크한 영화 정보를 myMovieList라는 state에 기록해 두었습니다.
+
+그리고 `EvalMovieListItem.vue`에서 `myMovieList`에 속해있는 영화들만 css효과를 주어 다른 영화들과 구분지어 주었습니다.
+
+이 과정을 통해서 사용자가 감명깊게 본 영화 혹은 좋아한 영화들을 테이블에 입력받았습니다.
+
+다음 과정에서는 그 영화들의 장르들을 기반으로 사용자의 장르별 점수를 주고 상위 3개 장르를 골라 영화추천을 해주었습니다.
+
+```python
+ for genre in genres:
+            if genre == '액션':
+                user_data.action = user_data.action + 1
+                user_data.save()
+            if genre == '모험':
+                user_data.adventure = user_data.adventure + 1
+                user_data.save()
+            if genre == '애니메이션':
+                user_data.animation = user_data.animation + 1
+                user_data.save()
+            .....
+```
+
+이런식으로 사용자가 체크했던(감명깊게 봤던)영화의 장르에 따라 점수를 1점씩 주었습니다.
+
+액션을 많이 체크했다면 액션영화를 더 추천받는 느낌이 들 것입니다.
 
 
 
