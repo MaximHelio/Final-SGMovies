@@ -24,7 +24,7 @@
       <h1 class="text-start">아직 등록된 댓글이 없습니다.</h1>
     </div>
   </div>
-  <div @click="getNextPage" v-if="getCommentList.length">
+  <div @click="getNextPage" class="pb-5" v-if="getCommentList.length">
     <v-pagination
       v-model="page"
       :length="5"
