@@ -5,7 +5,7 @@
       <p>평점: {{ movie.vote_average }}</p>
       <p>개봉일: {{ movie.release_date }}</p>
       <p>런타임: {{ movie.runtime }}</p>
-      <p>댓글 수: {{ getCommentList.length }}</p>
+      <!-- <p>댓글 수: {{ getCommentList.length }}</p> -->
     </div>
     <div class="row row-cols-2 w-75">
       <div
@@ -21,19 +21,20 @@
       </div>
     </div>
   </div>
-  <v-pagination
-    v-model="page"
-    :length="15"
-    :total-visible="7"
-    class="mt-5"
-    @click="getNextPage"
-  ></v-pagination>
+  <div @click="getNextPage">
+    <v-pagination
+      v-model="page"
+      :length="15"
+      :total-visible="7"
+      class="mt-5"
+      @click="getNextPage"
+    ></v-pagination>
+  </div>
 </div>
 
 </template>
 
 <script>
-import _ from 'lodash'
 
 export default {
   name: 'Comment',
@@ -44,7 +45,7 @@ export default {
   },
   computed: {
     getCommentList() {
-      return _.reverse(this.$store.getters.getMovieCommentList)
+      return this.$store.getters.getMovieCommentList
     },
   },
   props: {
@@ -54,7 +55,7 @@ export default {
   },
   methods: {
     getNextPage() {
-      console.log(this.page)
+      this.$store.dispatch('GET_MOVIE_COMMENT', {page: this.page, movie_id: this.movie.id})
     }
   }
 }

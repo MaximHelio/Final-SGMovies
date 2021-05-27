@@ -2,9 +2,6 @@
   <div id="app">
     <div v-if="isAuthenticated">
       <Nav
-        @change-page="evalPage"
-        @home-page='homePage'
-        @profile-page="profilePage"
       />
       <router-view/>
       <div v-if="page === 'home'">
@@ -19,14 +16,12 @@
 
 <script>
 import LoginSignupView from '@/views/LoginSignupView'
-import MovieView from '@/views/MovieView'
 import Nav from '@/components/Nav'
 
 export default {
   name: 'App',
   components: {
     LoginSignupView,
-    MovieView,
     Nav,
   },
   data () {

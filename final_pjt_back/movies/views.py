@@ -15,7 +15,7 @@ from .serializers import (
     CommentSerializer,
     WishlistSerializer,
 
-    CommentMovieSerializer
+    CommentMovieSerializer,
 
     CommentSetSerializer,
 )
@@ -72,12 +72,16 @@ def movie_detail(request, todo_id):
 # 댓글 전체 리스트 가져오기
 @api_view(['GET'])
 def comment_list(request, movie_id):
-    comments = Comment.objects.filter(movie_id=movie_id)
+    comments = Comment.objects.filter(movie_id=movie_id).order_by('-pk')
+    print(len(comments))
+    paginator = Paginator(comments, 4)
+
+    page = request.GET.get('page')
+    comments = paginator.get_page(page)
+
     serializer = CommentSerializer(comments, many=True)
     return Response(data=serializer.data)
-    # comments = Comment.objects.all()
-    # serializer = CommentSerializer(comments, many=True)
-    # return Response(data=serializer.data)
+
 
 # 댓글 만들기
 @api_view(['POST'])

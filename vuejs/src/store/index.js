@@ -74,7 +74,7 @@ export default new Vuex.Store({
     },
     getRecommendedMovieList(state) {
       return state.recommendedMovieList
-    }
+    },
     getUserWishList(state) {
       return state.userWishList
     },
@@ -127,7 +127,13 @@ export default new Vuex.Store({
       state.movieList = filterMovieList
     },
     CREATE_COMMENT(state, comments) {
+      console.log(comments)
       state.comments = comments
+      state.commentList.push(comments)
+    },
+    DELETE_COMMENT(state, comment) {
+      const idx = state.userCommentList.indexOf(comment)
+      state.userCommentList.splice(idx,1)
     },
     GET_MOVIE_COMMENT(state, commentList) {
       state.commentList = commentList
@@ -231,8 +237,16 @@ export default new Vuex.Store({
       }
       commit('CREATE_COMMENT', commentCreateData)
     },
-    async GET_MOVIE_COMMENT({ commit }, movie_id) {
-      const GET_COMMENT_URL = `/api/v1/movies/${movie_id}/comments/`
+    async DELETE_COMMENT({ commit }, comment) {
+      const COMMENT_DELETE_URL = `/api/v1/movies/comments/${comment.id}/`
+      let response = await axios.delete(COMMENT_DELETE_URL)
+      response = comment
+      commit('DELETE_COMMENT', response)
+    },
+    async GET_MOVIE_COMMENT({ commit }, payload) {
+      const movie_id = payload.movie_id
+      const page = payload.page
+      const GET_COMMENT_URL = `/api/v1/movies/${movie_id}/comments/?page=${page}`
       const response = await axios.get(GET_COMMENT_URL)
       commit('GET_MOVIE_COMMENT', response.data)
     },

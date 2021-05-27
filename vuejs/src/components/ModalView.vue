@@ -46,7 +46,6 @@
 import CommentModal from '@/components/CommentModal'
 import ModalTrail from '@/components/ModalTrail'
 import Comment from '@/components/Comment'
-import _ from 'lodash'
 
 export default {
   name: 'ModalView',
@@ -72,7 +71,7 @@ export default {
   },
   computed: {
     getCommentList() {
-      return _.reverse(this.$store.getters.getMovieCommentList)
+      return this.$store.getters.getMovieCommentList
     },
   },
   methods: {
@@ -81,7 +80,7 @@ export default {
     },
     movieComment() {
       this.category = 'comment'
-      this.$store.dispatch('GET_MOVIE_COMMENT', this.movie.id)
+      this.$store.dispatch('GET_MOVIE_COMMENT', {page: 1, movie_id: this.movie.id})
     },
     movieTrail() {
       this.category = 'trail'

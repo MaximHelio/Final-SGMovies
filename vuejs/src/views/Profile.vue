@@ -36,6 +36,7 @@
           :movie="item.movie"
           :comment="item"
           :genre="item.movie.genres"
+          @deleted="deleted"
         />
       </div>
     </div>
@@ -181,6 +182,13 @@ export default {
       _.throttle(this.$store.dispatch('SEARCH_MOVIE', this.keyword),150)
       console.log(this.searchMovieList)
     },
+    deleted() {
+      this.userName = localStorage.getItem('username')
+      const params = {
+      username: this.userName
+      }
+      this.$store.dispatch('GET_USER_COMMENT', params)  
+    }
   },
   created() {
     this.userName = localStorage.getItem('username')

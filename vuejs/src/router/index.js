@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import MovieView from '@/views/MovieView'
 import MovieEvaluation from '@/views/MovieEvaluation'
 import Profile from '@/views/Profile'
 
@@ -7,6 +8,11 @@ import Profile from '@/views/Profile'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'main',
+    component: MovieView,
+  },
   {
     path: '/movie-evaluation',
     name: 'MovieEvaluation',
