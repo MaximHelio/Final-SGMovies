@@ -56,7 +56,7 @@ export default {
 
       this.$store.dispatch('CREATE_COMMENT', this.comments)
       this.$emit('close')
-      this.$store.dispatch('GET_MOVIE_COMMENT', this.movie.id)
+      this.$store.dispatch('GET_MOVIE_COMMENT', {page: 1, movie_id: this.movie.id})
       this.comments.comment = '' // input 태그 초기화
       this.$refs.commentInput.value
     },

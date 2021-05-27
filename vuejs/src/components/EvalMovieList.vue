@@ -38,10 +38,10 @@ export default {
         }
     },
   },
-  created() {
+  async created() {
     document.addEventListener('scroll', _.throttle(this.checkBottom,500))
-    this.$store.dispatch('GET_MOVIE_LIST')
-    this.$store.dispatch('GET_MY_MOVIE_LIST')
+    await this.$store.dispatch('GET_MOVIE_LIST')
+    await this.$store.dispatch('GET_MY_MOVIE_LIST')
   },
 }
 </script>
